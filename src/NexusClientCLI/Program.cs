@@ -188,7 +188,7 @@ namespace Nexus.Client.CLI
                     IModFileInstaller fileInstaller = new ModFileInstaller(gameMode.GameModeEnvironmentInfo, mod, installLog, pluginManager, dataFileUtility, fileManager, delegate { return OverwriteResult.No; }, false);
                     InstallerGroup installers = new InstallerGroup(dataFileUtility, fileInstaller, iniIniInstaller, gameSpecificValueInstaller, pluginManager);
                     IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameMode, environmentInfo, installers, SynchronizationContext.Current);
-                    mod.BeginReadOnlyTransaction(fileUtil);
+//                    mod.BeginReadOnlyTransaction(fileUtil);
                     // run the script in a second thread and start the main loop in the main thread to ensure we can handle message boxes and the like
                     ScriptRunner runner = new ScriptRunner(executor, mod.InstallScript);
 
@@ -197,7 +197,7 @@ namespace Nexus.Client.CLI
                     {
                         iniIniInstaller.FinalizeInstall();
                         gameSpecificValueInstaller.FinalizeInstall();
-                        mod.EndReadOnlyTransaction();
+//                        mod.EndReadOnlyTransaction();
                         Application.Exit();
                     };
 
