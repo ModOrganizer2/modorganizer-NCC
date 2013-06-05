@@ -177,6 +177,8 @@ namespace Nexus.Client.CLI
                     return 3;
                 }
 
+                System.IO.File.WriteAllText(installationPath + "/__installInfo.txt", mod.ModName + "\n" + mod.HumanReadableVersion + "\n" + mod.Id);
+
                 if (mod.HasInstallScript)
                 {
                     IDataFileUtil dataFileUtility = new DataFileUtil(gameMode.GameModeEnvironmentInfo.InstallationPath);
