@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ReferencePath>
     </ReferencePath>
@@ -17,6 +17,6 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\omo_bugfixes\omo_release\profiles\Blubb\plugins.txt" -i "D:\Tannin_Documents\Projects\omo_bugfixes\omo_release\downloads\Black_Tower_-_Black_Sacrament_Armor_V3-2a_NMM_INSTALL_ONLY-5696-3-2.7z" "D:\Tannin_Documents\Projects\omo_bugfixes\omo_release\mods\Black Tower and Black Sacrament Armor pack"</StartArguments>
+    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\outputd\profiles\Default\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\outputd\downloads\SkyUI_3_4-3863-3-4.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\outputd\mods\SkyUI"</StartArguments>
   </PropertyGroup>
 </Project>
