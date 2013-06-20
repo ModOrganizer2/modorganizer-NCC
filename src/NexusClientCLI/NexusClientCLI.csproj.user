@@ -13,10 +13,17 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartArguments>-g Skyrim -p "C:\Users\Tannin\Documents\Projects\modorganizer-sf\output\profiles\Default\plugins.txt" -i "C:\Users\Tannin\Documents\Projects\modorganizer-sf\output\downloads\Book Covers Skyrim 1_5a Original FMOD-35399-1-5a.7z" "C:\Users\Tannin\Documents\Projects\modorganizer-sf\output\mods\BCS"</StartArguments>
+    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\Default\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\downloads\SMIM v1-43-8655-1-43.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\SMIM"</StartArguments>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\outputd\profiles\Default\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\outputd\downloads\SkyUI_3_4-3863-3-4.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\outputd\mods\SkyUI"</StartArguments>
+    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\Default\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\downloads\SMIM v1-43-8655-1-43.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\SMIM"</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\Default\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\downloads\SMIM v1-43-8655-1-43.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\SMIM"</StartArguments>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\Default\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\downloads\SMIM v1-43-8655-1-43.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\SMIM"</StartArguments>
   </PropertyGroup>
 </Project>
