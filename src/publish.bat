@@ -26,7 +26,8 @@ copy %_NMMPATH%\bin\Release\GameModes\Oblivion.* ..\..\output\NCC\GameModes
 copy %_NMMPATH%\bin\Release\GameModes\GamebryoBase.dll ..\..\output\NCC\GameModes
 
 mkdir ..\..\output\NCC\GameModes\data
-copy bin\Release\BossDummy.dll ..\..\output\NCC\GameModes\data\boss32.dll
+copy bin\Release\BossDummy.dll ..\..\output\NCC\data\boss64.dll
+copy bin\Release\BossDummy.dll ..\..\output\NCC\GameModes\data\boss64.dll
 
 mkdir ..\..\output\NCC\ModFormats
 copy %_NMMPATH%\bin\Release\ModFormats\FOMod.dll ..\..\output\NCC\ModFormats
@@ -40,3 +41,4 @@ copy %_NMMPATH%\bin\Release\ScriptTypes\XmlScript.dll ..\..\output\NCC\ScriptTyp
 
 mkdir ..\..\output\NCC\data
 copy %_NMMPATH%\bin\Release\data\7z-32bit.dll ..\..\output\NCC\data
+copy %_NMMPATH%\bin\Release\data\7z-64bit.dll ..\..\output\NCC\data
