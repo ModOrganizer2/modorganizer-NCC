@@ -32,26 +32,7 @@ namespace Nexus.Client.PluginManagement
         {
             StreamReader reader = new StreamReader(pluginsFile);
             
-//            string installationPath = Path.Combine(gameMode.GameModeEnvironmentInfo.InstallationPath, gameMode.GetModFormatAdjustedPath(mod.Format, null));
             string installationPath = gameMode.GetModFormatAdjustedPath(mod.Format, null);
-/*            switch (gameMode.ModeId)
-            {
-                case "Fallout3":
-                    m_Plugins.Add(new Plugin(Path.Combine(installationPath, "falloutnv.esm"), "falloutnv.esm", null));
-                    break;
-                case "FalloutNV":
-                    m_Plugins.Add(new Plugin(Path.Combine(installationPath, "fallout3.esm"), "fallout3.esm", null));
-                    break;
-                case "Oblivion":
-                    m_Plugins.Add(new Plugin(Path.Combine(installationPath, "oblivion.esm"), "oblivion.esm", null));
-                    break;
-                case "Skyrim":
-Console.WriteLine("skyrim esms");
-
-                    m_Plugins.Add(new Plugin(Path.Combine(installationPath, "skyrim.esm"), "skyrim.esm", null));
-                    m_Plugins.Add(new Plugin(Path.Combine(installationPath, "update.esm"), "update.esm", null));
-                    break;
-            }*/
 
             string line;
             while ((line = reader.ReadLine()) != null)
@@ -62,7 +43,7 @@ Console.WriteLine(Path.Combine(installationPath, line.ToLower()));
                     m_Plugins.Add(new Plugin(Path.Combine(installationPath, line.ToLower()), line, null));
                 }
             }
-            m_Plugins.CollectionChanged += new NotifyCollectionChangedEventHandler(ActivePlugins_CollectionChanged);
+            ((INotifyCollectionChanged)m_Plugins).CollectionChanged += new NotifyCollectionChangedEventHandler(ActivePlugins_CollectionChanged);
             m_ROOLPlugins = new ReadOnlyObservableList<Plugin>(m_Plugins);
         }
 
