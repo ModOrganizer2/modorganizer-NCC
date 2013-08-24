@@ -1,4 +1,4 @@
-set _NMMPATH=NMM
+set _NMMPATH=%~dp0%NMM
 
 mkdir ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\ChinhDo.Transactions.dll ..\..\output\NCC
@@ -8,9 +8,9 @@ copy %_NMMPATH%\bin\Release\ICSharpCode.TextEditor.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\ModManager.Interface.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\Mods.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\NexusClient.Interface.dll ..\..\output\NCC
-copy bin\Release\NexusClientCLI.exe ..\..\output\NCC
-copy bin\Release\NexusClientCLI.exe.config ..\..\output\NCC
-copy bin\Release\NexusClientCLI.exe.manifest ..\..\output\NCC
+copy %~dp0%bin\Release\NexusClientCLI.exe ..\..\output\NCC
+copy %~dp0%bin\Release\NexusClientCLI.exe.config ..\..\output\NCC
+copy %~dp0%bin\Release\NexusClientCLI.exe.manifest ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\Scripting.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\SevenZipSharp.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\Transactions.dll ..\..\output\NCC
@@ -26,8 +26,10 @@ copy %_NMMPATH%\bin\Release\GameModes\Oblivion.* ..\..\output\NCC\GameModes
 copy %_NMMPATH%\bin\Release\GameModes\GamebryoBase.dll ..\..\output\NCC\GameModes
 
 mkdir ..\..\output\NCC\GameModes\data
-copy bin\Release\BossDummy.dll ..\..\output\NCC\data\boss64.dll
-copy bin\Release\BossDummy.dll ..\..\output\NCC\GameModes\data\boss64.dll
+echo copy bin\Release\BossDummy.dll ..\..\output\NCC\data\boss32.dll
+echo copy bin\Release\BossDummy.dll ..\..\output\NCC\GameModes\data\boss32.dll
+echo copy bin\Release\BossDummy.dll ..\..\output\NCC\data\boss64.dll
+echo copy bin\Release\BossDummy.dll ..\..\output\NCC\GameModes\data\boss64.dll
 
 mkdir ..\..\output\NCC\ModFormats
 copy %_NMMPATH%\bin\Release\ModFormats\FOMod.dll ..\..\output\NCC\ModFormats

@@ -191,10 +191,10 @@ namespace Nexus.Client.ModManagement
 		/// <param name="p_strInstallPath">The path on the file system where the file is to be installed.</param>
 		/// <returns><c>true</c> if the file was written; <c>false</c> if the user chose
 		/// not to overwrite an existing file.</returns>
-		public bool InstallFileFromMod(string p_strModFilePath, string p_strInstallPath)
+		public bool InstallFileFromMod(string p_strModFilePath, string p_strInstallPath, bool p_booSecondaryInstallPath)
 		{
 			byte[] bteModFile = Mod.GetFile(p_strModFilePath);
-			return GenerateDataFile(p_strInstallPath, bteModFile);
+			return GenerateDataFile(p_strInstallPath, bteModFile, p_booSecondaryInstallPath);
 		}
 
 		/// <summary>
@@ -210,10 +210,17 @@ namespace Nexus.Client.ModManagement
 		/// not to overwrite an existing file.</returns>
 		/// <exception cref="IllegalFilePathException">Thrown if <paramref name="p_strPath"/> is
 		/// not safe.</exception>
-		public virtual bool GenerateDataFile(string p_strPath, byte[] p_bteData)
+		public virtual bool GenerateDataFile(string p_strPath, byte[] p_bteData, bool p_booSecondaryInstallPath)
 		{
 			DataFileUtility.AssertFilePathIsSafe(p_strPath);
-			string strInstallFilePath = Path.Combine(GameModeInfo.InstallationPath, p_strPath);
+			string strInstallFilePath = null;
+
+			if (p_booSecondaryInstallPath && !(String.IsNullOrEmpty(GameModeInfo.SecondaryInstallationPath)))
+				strInstallFilePath = Path.Combine(GameModeInfo.SecondaryInstallationPath, p_strPath);
+			else
+				strInstallFilePath = Path.Combine(GameModeInfo.InstallationPath, p_strPath);
+
+			FileInfo Info = new FileInfo(strInstallFilePath);
 			if (!Directory.Exists(Path.GetDirectoryName(strInstallFilePath)))
 				TransactionalFileManager.CreateDirectory(Path.GetDirectoryName(strInstallFilePath));
 			else
@@ -223,6 +230,8 @@ namespace Nexus.Client.ModManagement
 
 				if (File.Exists(strInstallFilePath))
 				{
+					if (Info.IsReadOnly == true)
+						File.SetAttributes(strInstallFilePath, File.GetAttributes(strInstallFilePath) & ~FileAttributes.ReadOnly);
 					string strInstallDirectory = Path.GetDirectoryName(p_strPath);
 					string strBackupDirectory = Path.Combine(GameModeInfo.OverwriteDirectory, strInstallDirectory);
 					string strOldModKey = InstallLog.GetCurrentFileOwnerKey(p_strPath);
@@ -246,6 +255,9 @@ namespace Nexus.Client.ModManagement
 						strFile = strOldModKey + "_" + strFile;
 
 						string strBackupFilePath = Path.Combine(strBackupDirectory, strFile);
+						Info = new FileInfo(strBackupFilePath);
+						if ((Info.IsReadOnly == true) && (File.Exists(strBackupFilePath)))
+							File.SetAttributes(strBackupFilePath, File.GetAttributes(strBackupFilePath) & ~FileAttributes.ReadOnly);
 						TransactionalFileManager.Copy(strInstallFilePath, strBackupFilePath, true);
 					}
 					TransactionalFileManager.Delete(strInstallFilePath);
