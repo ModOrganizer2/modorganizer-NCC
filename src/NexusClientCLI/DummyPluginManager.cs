@@ -39,7 +39,6 @@ namespace Nexus.Client.PluginManagement
             {
                 if (line[0] != '#')
                 {
-Console.WriteLine(Path.Combine(installationPath, line.ToLower()));
                     m_Plugins.Add(new Plugin(Path.Combine(installationPath, line.ToLower()), line, null));
                 }
             }

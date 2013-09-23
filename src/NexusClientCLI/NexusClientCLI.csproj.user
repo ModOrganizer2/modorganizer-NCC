@@ -29,6 +29,6 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\Default\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\downloads\SkyUI_4_1-3863-4-1.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\SkyUI"</StartArguments>
+    <StartArguments>-g FalloutNV -p "E:\Steam\SteamApps\common\fallout new vegas\ModOrganizer\profiles\Default\plugins.txt" -i "E:\Steam\SteamApps\common\fallout new vegas\ModOrganizer\downloads\ohud.fomod" "E:\Steam\SteamApps\common\fallout new vegas\ModOrganizer\mods\One Hud"</StartArguments>
   </PropertyGroup>
 </Project>
