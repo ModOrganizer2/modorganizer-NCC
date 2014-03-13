@@ -122,80 +122,83 @@
     <Setting Name="SupportOfflineMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="UseMultithreadedDownloads" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="HelpLinks" Type="Nexus.Client.Settings.KeyedSettings`1[System.String]" Scope="Application">
       <Value Profile="(Default)">
-                    &lt;KeyedSettingsOfString /&gt;
-                </Value>
+     &lt;KeyedSettingsOfString /&gt;
+    </Value>
     </Setting>
     <Setting Name="InstallationPaths" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;PerGameModeSettingsOfString /&gt;
-                </Value>
+     &lt;PerGameModeSettingsOfString /&gt;
+    </Value>
     </Setting>
     <Setting Name="ExecutablePaths" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;PerGameModeSettingsOfString /&gt;
-                </Value>
+     &lt;PerGameModeSettingsOfString /&gt;
+    </Value>
     </Setting>
     <Setting Name="CompletedSetup" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.Boolean]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;PerGameModeSettingsOfBoolean /&gt;
-                </Value>
+     &lt;PerGameModeSettingsOfBoolean /&gt;
+    </Value>
     </Setting>
     <Setting Name="ModFolder" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;PerGameModeSettingsOfString /&gt;
-                </Value>
+     &lt;PerGameModeSettingsOfString /&gt;
+    </Value>
     </Setting>
     <Setting Name="CustomGameModeSettings" Type="Nexus.Client.Settings.PerGameModeSettings`1[Nexus.Client.Settings.PerGameModeSettings`1[System.Object]]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;PerGameModeSettingsOfPerGameModeSettingsOfObject /&gt;
-                </Value>
+     &lt;PerGameModeSettingsOfPerGameModeSettingsOfObject /&gt;
+    </Value>
     </Setting>
     <Setting Name="InstallInfoFolder" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;PerGameModeSettingsOfString /&gt;
-                </Value>
+     &lt;PerGameModeSettingsOfString /&gt;
+    </Value>
     </Setting>
     <Setting Name="WindowPositions" Type="Nexus.Client.Settings.WindowPositions" Scope="User">
       <Value Profile="(Default)">
-                    &lt;WindowPositions /&gt;
-                </Value>
+     &lt;WindowPositions /&gt;
+    </Value>
     </Setting>
     <Setting Name="DockPanelLayouts" Type="Nexus.Client.Settings.KeyedSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;KeyedSettingsOfString /&gt;
-                </Value>
+     &lt;KeyedSettingsOfString /&gt;
+    </Value>
     </Setting>
     <Setting Name="ColumnWidths" Type="Nexus.Client.Settings.ColumnWidths" Scope="User">
       <Value Profile="(Default)">
-                    &lt;ColumnWidths /&gt;
-                </Value>
+     &lt;ColumnWidths /&gt;
+    </Value>
     </Setting>
     <Setting Name="SplitterSizes" Type="Nexus.Client.Settings.SplitterSizes" Scope="User">
       <Value Profile="(Default)">
-                    &lt;SplitterSizes /&gt;
-                </Value>
+     &lt;SplitterSizes /&gt;
+    </Value>
     </Setting>
     <Setting Name="CustomLaunchCommands" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;PerGameModeSettingsOfString /&gt;
-                </Value>
+     &lt;PerGameModeSettingsOfString /&gt;
+    </Value>
     </Setting>
     <Setting Name="CustomLaunchCommandArguments" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;PerGameModeSettingsOfString /&gt;
-                </Value>
+     &lt;PerGameModeSettingsOfString /&gt;
+    </Value>
     </Setting>
     <Setting Name="SelectedLaunchCommands" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;PerGameModeSettingsOfString /&gt;
-                </Value>
+     &lt;PerGameModeSettingsOfString /&gt;
+    </Value>
     </Setting>
     <Setting Name="RepositoryUsernames" Type="Nexus.Client.Settings.KeyedSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
-                    &lt;KeyedSettingsOfString /&gt;
-                </Value>
+     &lt;KeyedSettingsOfString /&gt;
+    </Value>
     </Setting>
   </Settings>
 </SettingsFile>

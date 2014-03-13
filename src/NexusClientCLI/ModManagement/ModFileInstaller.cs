@@ -8,6 +8,7 @@ using Nexus.Client.PluginManagement;
 using Nexus.Client.Util;
 using Nexus.Client.Games;
 using ChinhDo.Transactions;
+using Extensions;
 
 namespace Nexus.Client.ModManagement
 {
@@ -60,11 +61,11 @@ namespace Nexus.Client.ModManagement
 		/// <value>The manager to use to manage plugins.</value>
 		protected IPluginManager PluginManager { get; private set; }
 
-        /// <summary>
-        /// Gets whether the file is a mod or a plugin.
-        /// </summary>
-        /// <value>true or false.</value>
-        protected bool IsPlugin { get; private set; }
+		/// <summary>
+		/// Gets whether the file is a mod or a plugin.
+		/// </summary>
+		/// <value>true or false.</value>
+		protected bool IsPlugin { get; private set; }
 
 		#endregion
 
@@ -80,7 +81,7 @@ namespace Nexus.Client.ModManagement
 		/// <param name="p_dfuDataFileUtility">The utility class to use to work with data files.</param>
 		/// <param name="p_tfmFileManager">The transactional file manager to use to interact with the file system.</param>
 		/// <param name="p_dlgOverwriteConfirmationDelegate">The method to call in order to confirm an overwrite.</param>
-        /// <param name="p_UsesPlugins">Whether the file is a mod or a plugin.</param>
+		/// <param name="p_UsesPlugins">Whether the file is a mod or a plugin.</param>
 		public ModFileInstaller(IGameModeEnvironmentInfo p_gmiGameModeInfo, IMod p_modMod, IInstallLog p_ilgInstallLog, IPluginManager p_pmgPluginManager, IDataFileUtil p_dfuDataFileUtility, TxFileManager p_tfmFileManager, ConfirmItemOverwriteDelegate p_dlgOverwriteConfirmationDelegate, bool p_UsesPlugins)
 		{
 			GameModeInfo = p_gmiGameModeInfo;
@@ -90,7 +91,7 @@ namespace Nexus.Client.ModManagement
 			DataFileUtility = p_dfuDataFileUtility;
 			TransactionalFileManager = p_tfmFileManager;
 			m_dlgOverwriteConfirmationDelegate = p_dlgOverwriteConfirmationDelegate ?? ((s, b, m) => OverwriteResult.No);
-            IsPlugin = p_UsesPlugins;
+			IsPlugin = p_UsesPlugins;
 		}
 
 		#endregion
@@ -193,8 +194,76 @@ namespace Nexus.Client.ModManagement
 		/// not to overwrite an existing file.</returns>
 		public bool InstallFileFromMod(string p_strModFilePath, string p_strInstallPath, bool p_booSecondaryInstallPath)
 		{
-			byte[] bteModFile = Mod.GetFile(p_strModFilePath);
-			return GenerateDataFile(p_strInstallPath, bteModFile, p_booSecondaryInstallPath);
+			string destinationPath = installPath(p_strInstallPath, p_booSecondaryInstallPath);
+
+			if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
+				TransactionalFileManager.CreateDirectory(Path.GetDirectoryName(destinationPath));
+			else
+			{
+				if (!TestDoOverwrite(p_strInstallPath))
+					return false;
+
+				if (File.Exists(destinationPath))
+				{
+					FileInfo Info = new FileInfo(destinationPath);
+					if (Info.IsReadOnly == true)
+						File.SetAttributes(destinationPath, File.GetAttributes(destinationPath) & ~FileAttributes.ReadOnly);
+					string strInstallDirectory = Path.GetDirectoryName(p_strInstallPath);
+					string strBackupDirectory = Path.Combine(GameModeInfo.OverwriteDirectory, strInstallDirectory);
+					string strOldModKey = InstallLog.GetCurrentFileOwnerKey(p_strInstallPath);
+					if (strOldModKey == null)
+					{
+						InstallLog.LogOriginalDataFile(p_strInstallPath);
+						strOldModKey = InstallLog.OriginalValuesKey;
+					}
+					string strInstallingModKey = InstallLog.GetModKey(Mod);
+					//if this mod has installed this file already we just replace it and don't
+					// need to back it up.
+					if (!strOldModKey.Equals(strInstallingModKey))
+					{
+						//back up the current version of the file if the current mod
+						// didn't install it
+						if (!Directory.Exists(strBackupDirectory))
+							TransactionalFileManager.CreateDirectory(strBackupDirectory);
+
+						//we get the file name this way in order to preserve the file name's case
+						string strFile = Path.GetFileName(Directory.GetFiles(Path.GetDirectoryName(destinationPath), Path.GetFileName(destinationPath))[0]);
+						strFile = strOldModKey + "_" + strFile;
+
+						string strBackupFilePath = Path.Combine(strBackupDirectory, strFile);
+						Info = new FileInfo(strBackupFilePath);
+						if ((Info.IsReadOnly == true) && (File.Exists(strBackupFilePath)))
+							File.SetAttributes(strBackupFilePath, File.GetAttributes(strBackupFilePath) & ~FileAttributes.ReadOnly);
+						TransactionalFileManager.Copy(destinationPath, strBackupFilePath, true);
+					}
+					TransactionalFileManager.Delete(destinationPath);
+				}
+			}
+ 
+            using (FileStream stream = File.Create(destinationPath))
+            {
+                Mod.ExtractFileTo(p_strModFilePath, stream);
+            }
+
+			// Checks whether the file is a gamebryo plugin
+			if (IsPlugin)
+				if (PluginManager.IsActivatiblePluginFile(destinationPath))
+					PluginManager.AddPlugin(destinationPath);
+			InstallLog.AddDataFile(Mod, p_strInstallPath);
+			return IsPlugin;
+		}
+
+		private string installPath(string installPath, bool useSecondaryInstallPath)
+		{
+			DataFileUtility.AssertFilePathIsSafe(installPath);
+			string result = null;
+
+			if (useSecondaryInstallPath && !(String.IsNullOrEmpty(GameModeInfo.SecondaryInstallationPath)))
+				result = Path.Combine(GameModeInfo.SecondaryInstallationPath, installPath);
+			else
+				result = Path.Combine(GameModeInfo.InstallationPath, installPath);
+
+			return result;
 		}
 
 		/// <summary>
@@ -264,10 +333,10 @@ namespace Nexus.Client.ModManagement
 				}
 			}
 			TransactionalFileManager.WriteAllBytes(strInstallFilePath, p_bteData);
-            // Checks whether the file is a gamebryo plugin
-            if (IsPlugin)
-			    if (PluginManager.IsActivatiblePluginFile(strInstallFilePath))
-				    PluginManager.AddPlugin(strInstallFilePath);
+			// Checks whether the file is a gamebryo plugin
+			if (IsPlugin)
+				if (PluginManager.IsActivatiblePluginFile(strInstallFilePath))
+					PluginManager.AddPlugin(strInstallFilePath);
 			InstallLog.AddDataFile(Mod, p_strPath);
 			return IsPlugin;
 		}
@@ -276,62 +345,13 @@ namespace Nexus.Client.ModManagement
 		/// Uninstalls the specified file.
 		/// </summary>
 		/// <remarks>
-		/// If the mod we are uninstalling doesn't own the file, then its version is removed
-		/// from the overwrites directory. If the mod we are uninstalling overwrote a file when it
-		/// installed the specified file, then the overwritten file is restored. Otherwise
-		/// the file is deleted.
+		/// unsupported
 		/// </remarks>
 		/// <param name="p_strPath">The path to the file that is to be uninstalled.</param>
-		public void UninstallDataFile(string p_strPath)
+		/// <param name="p_booSecondaryInstallPath">Whether to use the secondary install path.</param>
+		public void UninstallDataFile(string p_strPath, bool p_booSecondaryInstallPath)
 		{
-			DataFileUtility.AssertFilePathIsSafe(p_strPath);
-			string strUninstallingModKey = InstallLog.GetModKey(Mod);
-			string strInstallFilePath = Path.Combine(GameModeInfo.InstallationPath, p_strPath);
-			string strBackupDirectory = Path.Combine(GameModeInfo.OverwriteDirectory, Path.GetDirectoryName(p_strPath));
-			if (File.Exists(strInstallFilePath))
-			{
-				string strCurrentOwnerKey = InstallLog.GetCurrentFileOwnerKey(p_strPath);
-				//if we didn't install the file, then leave it alone
-				if (strUninstallingModKey.Equals(strCurrentOwnerKey))
-				{
-					//if we did install the file, replace it with the file we overwrote
-					// when we installed the file
-					// if we didn't overwrite a file, then just delete the current file
-					TransactionalFileManager.Delete(strInstallFilePath);
-                    if (IsPlugin)
-					    if (PluginManager.IsActivatiblePluginFile(strInstallFilePath))
-						    PluginManager.RemovePlugin(strInstallFilePath);
-					string strPreviousOwnerKey = InstallLog.GetPreviousFileOwnerKey(p_strPath);
-					if (strPreviousOwnerKey != null)
-					{
-						string strFile = strPreviousOwnerKey + "_" + Path.GetFileName(p_strPath);
-						string strRestoreFromPath = Path.Combine(strBackupDirectory, strFile);
-						if (File.Exists(strRestoreFromPath))
-						{
-							//we get the file name this way in order to preserve the file name's case
-							string strBackupFileName = Path.GetFileName(Directory.GetFiles(Path.GetDirectoryName(strRestoreFromPath), Path.GetFileName(strRestoreFromPath))[0]);
-							strBackupFileName = strBackupFileName.Substring(strBackupFileName.IndexOf('_') + 1);
-							string strNewDataPath = Path.Combine(Path.GetDirectoryName(strInstallFilePath), strBackupFileName);
-							TransactionalFileManager.Copy(strRestoreFromPath, strNewDataPath, true);
-							TransactionalFileManager.Delete(strRestoreFromPath);
-						}
-					}
-
-					//remove any empty directories from the data folder we may have created
-					TrimEmptyDirectories(Path.GetDirectoryName(strInstallFilePath), GameModeInfo.InstallationPath);
-				}
-			}
-
-			//remove our version of the file from the backup directory
-			string strOverwritePath = Path.Combine(strBackupDirectory, strUninstallingModKey + "_" + Path.GetFileName(p_strPath));
-			if (File.Exists(strOverwritePath))
-				TransactionalFileManager.Delete(strOverwritePath);
-
-			//remove any empty directories from the overwrite folder we may have created
-			string strStopDirectory = GameModeInfo.OverwriteDirectory;
-			TrimEmptyDirectories(Path.GetDirectoryName(strOverwritePath), strStopDirectory);
-			
-			InstallLog.RemoveDataFile(Mod, p_strPath);
+			// NOP - Not supported in CLI version
 		}
 
 		/// <summary>

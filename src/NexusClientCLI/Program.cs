@@ -71,7 +71,7 @@ namespace Nexus.Client.CLI
         /// <param name="p_strModPath">The path to the mod file.</param>
         /// <returns>A mod of the appropriate type from the specified file, if the type of hte mod
         /// can be determined; <c>null</c> otherwise.</returns>
-        private static IMod CreateMod(string modPath, IModFormatRegistry formatRegistry)
+        private static IMod CreateMod(string modPath, IModFormatRegistry formatRegistry, IGameMode gameMode)
         {
             List<KeyValuePair<FormatConfidence, IModFormat>> lstFormats = new List<KeyValuePair<FormatConfidence, IModFormat>>();
             foreach (IModFormat mftFormat in formatRegistry.Formats)
@@ -82,7 +82,7 @@ namespace Nexus.Client.CLI
                 Console.WriteLine("failed to determine format for " + modPath);
                 return null;
             }
-            return lstFormats[0].Value.CreateMod(modPath);
+            return lstFormats[0].Value.CreateMod(modPath, gameMode);
         }
 
         static int DoInstall(string game, string filename, string installationPath, string pluginsFile, ref string errorString)
@@ -170,7 +170,7 @@ namespace Nexus.Client.CLI
                 string fileNameTemporary = Path.Combine(environmentInfo.TemporaryPath, Path.GetFileName(filename));
                 File.Copy(filename, fileNameTemporary);
 
-                IMod mod = CreateMod(fileNameTemporary, formatRegistry);
+                IMod mod = CreateMod(fileNameTemporary, formatRegistry, gameMode);
                 if (mod == null)
                 {
                     errorString = "failed to initialize mod";
@@ -190,7 +190,7 @@ namespace Nexus.Client.CLI
                     IModFileInstaller fileInstaller = new ModFileInstaller(gameMode.GameModeEnvironmentInfo, mod, installLog, pluginManager, dataFileUtility, fileManager, delegate { return OverwriteResult.No; }, false);
                     InstallerGroup installers = new InstallerGroup(dataFileUtility, fileInstaller, iniIniInstaller, gameSpecificValueInstaller, pluginManager);
                     IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameMode, environmentInfo, installers, SynchronizationContext.Current);
-                    // read-only transactions are waaaay faster, especially for solid archives (I didn't actually get the reasoning from the comments)
+                    // read-only transactions are waaaay faster, especially for solid archives) because the extractor isn't recreated for every extraction (why exactly would it be otherwise?)
                     mod.BeginReadOnlyTransaction(fileUtil);
                     // run the script in a second thread and start the main loop in the main thread to ensure we can handle message boxes and the like
                     ScriptRunner runner = new ScriptRunner(executor, mod.InstallScript);
