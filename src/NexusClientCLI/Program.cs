@@ -169,7 +169,6 @@ namespace Nexus.Client.CLI
                 // prevent the installer script from accessing the archive in its original location
                 string fileNameTemporary = Path.Combine(environmentInfo.TemporaryPath, Path.GetFileName(filename));
                 File.Copy(filename, fileNameTemporary);
-
                 IMod mod = CreateMod(fileNameTemporary, formatRegistry, gameMode);
                 if (mod == null)
                 {

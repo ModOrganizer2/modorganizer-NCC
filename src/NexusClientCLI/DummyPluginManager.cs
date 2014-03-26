@@ -32,7 +32,7 @@ namespace Nexus.Client.PluginManagement
         {
             StreamReader reader = new StreamReader(pluginsFile);
             
-            string installationPath = gameMode.GetModFormatAdjustedPath(mod.Format, null);
+            string installationPath = Path.Combine(gameMode.GameModeEnvironmentInfo.InstallationPath, gameMode.GetModFormatAdjustedPath(mod.Format, null));
 
             string line;
             while ((line = reader.ReadLine()) != null)

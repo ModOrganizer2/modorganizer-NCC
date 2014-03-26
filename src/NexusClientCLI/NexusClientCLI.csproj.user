@@ -11,7 +11,7 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\gna2\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\downloads\Skyrim Immersive Creatures v6_5_2 NMM BAIN-24913-v6-5-2.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\Skyrim Immersive Creatures"</StartArguments>
+    <StartArguments>-g FalloutNV -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\gna2\plugins.txt" -i "D:\Tannin\Downloads\Advanced Recon Thermal Nightvision.fomod" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\Advanced Recon Gear"</StartArguments>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">

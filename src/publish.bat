@@ -8,9 +8,9 @@ copy %_NMMPATH%\bin\Release\ICSharpCode.TextEditor.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\ModManager.Interface.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\Mods.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\NexusClient.Interface.dll ..\..\output\NCC
-copy %~dp0%bin\Release\NexusClientCLI.exe ..\..\output\NCC
-copy %~dp0%bin\Release\NexusClientCLI.exe.config ..\..\output\NCC
-copy %~dp0%bin\Release\NexusClientCLI.exe.manifest ..\..\output\NCC
+copy %_NMMPATH%\bin\Release\NexusClientCLI.exe ..\..\output\NCC
+copy %_NMMPATH%\bin\Release\NexusClientCLI.exe.config ..\..\output\NCC
+copy %_NMMPATH%\bin\Release\NexusClientCLI.exe.manifest ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\Scripting.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\SevenZipSharp.dll ..\..\output\NCC
 copy %_NMMPATH%\bin\Release\Transactions.dll ..\..\output\NCC
