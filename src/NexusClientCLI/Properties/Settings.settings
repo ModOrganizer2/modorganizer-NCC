@@ -54,13 +54,10 @@
 			</Value>
     </Setting>
     <Setting Name="DelayedSettings" Type="Nexus.Client.Settings.PerGameModeSettings`1[Nexus.Client.Settings.KeyedSettings`1[System.String]]" Scope="User">
-      <Value Profile="(Default)">
-        &lt;?xml version="1.0" encoding="utf-16"?&gt;
-        &lt;PerGameModeSettingsOfKeyedSettingsOfString /&gt;
-			</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ModManagerUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://skyrim.nexusmods.com/downloads/file.php?id=1334x</Value>
+      <Value Profile="(Default)">http://skyrim.nexusmods.com/downloads/file.php?id=1334</Value>
     </Setting>
     <Setting Name="CheckForUpdatesOnStartup" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

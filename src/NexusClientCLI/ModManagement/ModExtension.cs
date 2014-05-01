@@ -1,6 +1,6 @@
 ﻿using Nexus.Client.Mods;
-using Nexus.Client.Mods.Formats.FOMod;
-using Nexus.Client.Mods.Formats.OMod;
+//using Nexus.Client.Mods.Formats.FOMod;
+//using Nexus.Client.Mods.Formats.OMod;
 using Nexus.Client.Util;
 using SevenZip;
 using System;
@@ -85,11 +85,11 @@ namespace Extensions
 		/// <param name="p_outStream">The stream to write to.</param>
 		/// <exception cref="System.IO.FileNotFoundException">Thrown if the specified file
 		/// is not in the mod.</exception>
-		public static void ExtractFileTo(this OMod mod, string p_strFile, Stream p_outStream)
+/*		public static void ExtractFileTo(this OMod mod, string p_strFile, Stream p_outStream)
 		{
             byte[] data = mod.GetFile(p_strFile);
             p_outStream.Write(data, 0, data.Length);
-		} 
+		} */
 
 		/// <summary>
 		/// write the specified file to a stream

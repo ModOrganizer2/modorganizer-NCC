@@ -206,7 +206,8 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfKeyedSettingsOfString />\r\n    ")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n\t\t\t\t<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n\t\t\t\t<PerGameModeSettingsOfKeyedSet" +
+            "tingsOfString />\r\n\t\t\t")]
         public global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<string>> DelayedSettings {
             get {
                 return ((global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<string>>)(this["DelayedSettings"]));
@@ -218,7 +219,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://skyrim.nexusmods.com/downloads/file.php?id=1334x")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://skyrim.nexusmods.com/downloads/file.php?id=1334")]
         public string ModManagerUrl {
             get {
                 return ((string)(this["ModManagerUrl"]));

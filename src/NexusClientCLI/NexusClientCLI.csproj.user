@@ -11,11 +11,13 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartArguments>-g FalloutNV -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\gna2\plugins.txt" -i "D:\Tannin\Downloads\Advanced Recon Thermal Nightvision.fomod" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\Advanced Recon Gear"</StartArguments>
+    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\gna2\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\downloads\SkyUI_4_1-3863-4-1.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\skyui"</StartArguments>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <StartWorkingDirectory>D:\Tannin_Documents\Projects\ModOrganizer_sf\source\NCC\nmm\bin\Debug\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\gna2\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\downloads\Skyrim Immersive Creatures v6_5_2 NMM BAIN-24913-v6-5-2.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\Skyrim Immersive Creatures"</StartArguments>
+    <StartArguments>-g Skyrim -p "E:\Documents\Projects\ModOrganizer_sf\output\profiles\adminowned\plugins.txt" -i "E:\Documents\Projects\ModOrganizer_sf\output\downloads\Caliente Female Body Mod BBE v3-2-2666-3-2-3.7z" "E:\Documents\Projects\ModOrganizer_sf\output\mods\Calientes Beautiful Bodies Edition -CBBE-"</StartArguments>
+    <StartWorkingDirectory />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <StartArguments>-g Skyrim -p "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\profiles\Default\plugins.txt" -i "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\downloads\SMIM v1-43-8655-1-43.7z" "D:\Tannin_Documents\Projects\ModOrganizer_sf\output\mods\SMIM"</StartArguments>

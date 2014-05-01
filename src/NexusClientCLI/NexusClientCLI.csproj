@@ -63,6 +63,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>5BAE3112B789DE525238306EB42F614854F1C292</ManifestCertificateThumbprint>
@@ -179,8 +180,9 @@
     <Compile Include="Util\NexusFileUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Properties\app.manifest" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -190,11 +192,6 @@
     <ProjectReference Include="..\NMM\ChinhDo.Transactions.FileManager\ChinhDo.Transactions.FileManager.csproj">
       <Project>{E824ACBB-90C8-4C60-9D52-9C8020E98E3E}</Project>
       <Name>ChinhDo.Transactions.FileManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\nmm\FOMod\FOMod.csproj">
-      <Project>{34b04f6b-0d64-455f-b20f-1c3e080ae601}</Project>
-      <Name>FOMod</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\NMM\GamebryoBase\GamebryoBase.csproj">
       <Project>{0055FB79-3587-486E-A87E-70304A61D7A4}</Project>
@@ -211,11 +208,6 @@
     <ProjectReference Include="..\NMM\NexusClient.Interface\NexusClient.Interface.csproj">
       <Project>{D586E7D8-9C8E-48F0-B20C-31A52B37E9D3}</Project>
       <Name>NexusClient.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\nmm\OMod\OMod.csproj">
-      <Project>{0b0e3c6e-c51d-473d-8605-7d7679338aa1}</Project>
-      <Name>OMod</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\NMM\Scripting\Scripting.csproj">
       <Project>{66DC8748-2DC2-4E6E-B645-080E0CFDC831}</Project>
