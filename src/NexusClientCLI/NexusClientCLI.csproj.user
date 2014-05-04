@@ -16,7 +16,7 @@
     <StartWorkingDirectory>D:\Tannin_Documents\Projects\ModOrganizer_sf\source\NCC\nmm\bin\Debug\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <StartArguments>-g Skyrim -p "E:\Documents\Projects\ModOrganizer_sf\output\profiles\adminowned\plugins.txt" -i "E:\Documents\Projects\ModOrganizer_sf\output\downloads\Caliente Female Body Mod BBE v3-2-2666-3-2-3.7z" "E:\Documents\Projects\ModOrganizer_sf\output\mods\Calientes Beautiful Bodies Edition -CBBE-"</StartArguments>
+    <StartArguments>-g Skyrim -p "E:\Documents\Projects\ModOrganizer_sf\output\profiles\adminowned\plugins.txt" -i "E:\Documents\Projects\ModOrganizer_sf\output\downloads\animated clutter-48287-1-8-2.7z" "E:\Documents\Projects\ModOrganizer_sf\output\mods\Animated clutter"</StartArguments>
     <StartWorkingDirectory />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">

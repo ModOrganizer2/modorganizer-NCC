@@ -53,9 +53,6 @@
 				&lt;PerGameModeSettingsOfKeyedSettingsOfAddModDescriptor /&gt;
 			</Value>
     </Setting>
-    <Setting Name="DelayedSettings" Type="Nexus.Client.Settings.PerGameModeSettings`1[Nexus.Client.Settings.KeyedSettings`1[System.String]]" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="ModManagerUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://skyrim.nexusmods.com/downloads/file.php?id=1334</Value>
     </Setting>
@@ -195,6 +192,11 @@
     <Setting Name="RepositoryUsernames" Type="Nexus.Client.Settings.KeyedSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">
      &lt;KeyedSettingsOfString /&gt;
+    </Value>
+    </Setting>
+    <Setting Name="DelayedSettings" Type="Nexus.Client.Settings.PerGameModeSettings`1[Nexus.Client.Settings.KeyedSettings`1[System.String]]" Scope="User">
+      <Value Profile="(Default)">
+     &lt;PerGameModeSettingsOfKeyedSettingsOfString /&gt;
     </Value>
     </Setting>
   </Settings>

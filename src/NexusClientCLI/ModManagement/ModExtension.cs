@@ -100,7 +100,8 @@ namespace Extensions
 		/// is not in the mod.</exception>
 		public static void ExtractFileTo<T>(this T mod, string p_strFile, Stream p_outStream)
 		{
-			if (!(bool) mod.GetType().GetMethod("ContainsFile").Invoke(mod, new object[] { p_strFile }))
+            string realPath = (string) mod.CallPrivateMethod<string>("GetRealPath", new object[] { p_strFile });
+			if (!(bool) mod.GetType().GetMethod("ContainsFile").Invoke(mod, new object[] { realPath }))
 			{
 				if (Path.GetFileNameWithoutExtension(p_strFile).ToLower() == "screenshot")
 				{
@@ -112,7 +113,7 @@ namespace Extensions
 					throw new FileNotFoundException("File doesn't exist in FOMod", p_strFile);
 			}
 
-			mod.GetPrivateField<Archive>("m_arcFile").ExtractFileContents(p_strFile, p_outStream);
+            mod.GetPrivateField<Archive>("m_arcFile").ExtractFileContents(realPath, p_outStream);
 		} 
 	}
 	class ModExtension

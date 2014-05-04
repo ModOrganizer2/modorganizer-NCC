@@ -186,7 +186,7 @@ namespace Nexus.Client.ModManagement
         }
 
         /// <summary>
-        /// Installs the speified file from the Mod to the file system.
+        /// Installs the specified file from the Mod to the file system.
         /// </summary>
         /// <param name="p_strModFilePath">The path of the file in the Mod to install.</param>
         /// <param name="p_strInstallPath">The path on the file system where the file is to be installed.</param>
