@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using System.IO;
 using Nexus.Client.ModManagement.Scripting;
 using Nexus.Client.ModManagement.InstallationLog;
@@ -194,6 +195,7 @@ namespace Nexus.Client.ModManagement
         /// not to overwrite an existing file.</returns>
         public bool InstallFileFromMod(string p_strModFilePath, string p_strInstallPath, bool p_booSecondaryInstallPath)
         {
+            Console.WriteLine("install " + p_strModFilePath + " to " + p_strInstallPath);
             string destinationPath = installPath(p_strInstallPath, p_booSecondaryInstallPath);
 
             if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
@@ -239,10 +241,21 @@ namespace Nexus.Client.ModManagement
                     TransactionalFileManager.Delete(destinationPath);
                 }
             }
- 
-            using (FileStream stream = File.Create(destinationPath))
+
+            try {
+                using (FileStream stream = File.Create(destinationPath))
+                {
+                    Mod.ExtractFileTo(p_strModFilePath, stream);
+                }
+            }
+            catch (FileNotFoundException e)
             {
-                Mod.ExtractFileTo(p_strModFilePath, stream);
+            	MessageBox.Show("File " + p_strModFilePath + " couldn't be extracted.\n" +
+                                "This probably means the mod is broken though you may still get partial functionality.\n" +
+                                "Please inform the mod author.\n" +
+                                "Detailed Error: " + e.Message, "File not found in FOMod", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    			File.Delete(destinationPath);
+                throw;
             }
 
             // Checks whether the file is a gamebryo plugin
