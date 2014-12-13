@@ -16,7 +16,7 @@
     <StartWorkingDirectory>E:\Documents\Projects\ModOrganizer_sf\source\NCC\nmm\bin\Debug\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <StartArguments>-g Skyrim -p "E:\Documents\Projects\ModOrganizer_sf\output\profiles\adminowned\plugins.txt" -i "E:\Documents\Projects\ModOrganizer_sf\output\downloads\Caliente Female Body Mod BBE v3-2-2666-3-2-3.7z" "E:\Documents\Projects\ModOrganizer_sf\output\mods\cbbe"</StartArguments>
+    <StartArguments>-g Skyrim -p "C:\Users\Tannin\Documents\Projects\ModOrganizer_trunk\output\profiles\Default" -gd "E:\Steam Games\SteamApps\common\skyrim" -d "C:\Users\Tannin\Documents\Projects\ModOrganizer_trunk\output\overwrite" -se "1.7.1" -i "C:\Users\Tannin\Documents\Projects\ModOrganizer_trunk\output\downloads\SkyUI_4_1-3863-4-1.7z" "C:\Users\Tannin\Documents\Projects\ModOrganizer_trunk\output\mods\SkyUI"</StartArguments>
     <StartWorkingDirectory />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">

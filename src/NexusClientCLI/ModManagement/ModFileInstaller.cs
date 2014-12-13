@@ -257,6 +257,11 @@ namespace Nexus.Client.ModManagement
     			File.Delete(destinationPath);
                 throw;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception: " + ex.ToString());
+                throw;
+            }
 
             // Checks whether the file is a gamebryo plugin
             if (IsPlugin)

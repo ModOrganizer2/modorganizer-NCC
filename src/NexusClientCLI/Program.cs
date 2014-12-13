@@ -29,6 +29,8 @@ using Nexus.Client.ModManagement.InstallationLog;
 using Nexus.Client.PluginManagement;
 using Nexus.Client.Settings;
 using Nexus.Client.BackgroundTasks;
+using Castle;
+using Castle.DynamicProxy;
 
 
 namespace Nexus.Client.CLI
@@ -85,7 +87,8 @@ namespace Nexus.Client.CLI
             return lstFormats[0].Value.CreateMod(modPath, gameMode);
         }
 
-        static int DoInstall(string game, string filename, string installationPath, string pluginsFile, ref string errorString)
+        static int DoInstall(string game, string filename, string installationPath, string profilePath, string gamePath,
+                             List<string> additionalSearchPaths, string seVersion, ref string errorString)
         {
 
             if (game == null)
@@ -98,9 +101,14 @@ namespace Nexus.Client.CLI
                 errorString = "no file specified";
                 return 1;
             }
-            if (pluginsFile == null)
+            if (profilePath == null)
             {
-                errorString = "no plugin file specified";
+                errorString = "no profile path specified";
+                return 1;
+            }
+            if (gamePath == null)
+            {
+                errorString = "no game path specified";
                 return 1;
             }
             try
@@ -147,7 +155,21 @@ namespace Nexus.Client.CLI
                     environmentInfo.Settings.DelayedSettings["ALL"] = new KeyedSettings<string>();
 
                 ViewMessage warning = null;
+
                 IGameMode gameMode = gameModeFactory.BuildGameMode(fileUtil, out warning);
+
+                // use a proxy so we can intercept accesses to the IGameMode interface. This allows us to make the additional search paths accessible from
+                // the sandbox and feed in the script extender version even though the nmm lib won't find it.
+                // This is a massive hack and there is an issue: nmm tries to look up the location of the assembly (for whatever reason) and the proxy
+                // generated here is in a dynamic assembly and thus doesn't have a location. We will therefore feed the proxy only to the script executor
+                // and hope for the best
+                ProxyGenerator generator = new ProxyGenerator();
+                GameModeInterceptor interceptor = new GameModeInterceptor(additionalSearchPaths, seVersion != null ? new Version(seVersion) : null);
+
+                IGameMode gameModeProxied = (IGameMode)generator.CreateClassProxyWithTarget(gameMode.GetType(),
+                                                                           gameMode,
+                                                                           new object[] { environmentInfo, fileUtil },
+                                                                           new IInterceptor[] { interceptor });
 
                 IModCacheManager cacheManager = new NexusModCacheManager(environmentInfo.TemporaryPath, gameMode.GameModeEnvironmentInfo.ModDirectory, fileUtil);
 
@@ -180,15 +202,25 @@ namespace Nexus.Client.CLI
 
                 if (mod.HasInstallScript)
                 {
-                    IDataFileUtil dataFileUtility = new DataFileUtil(gameMode.GameModeEnvironmentInfo.InstallationPath);
+                    DummyDataFileUtilFactory dummyFactory = null;
+                    IDataFileUtil dataFileUtility;
+                    Logger.Info("Detected C# script that relies on files in the actual data folder");
+
+                    string modlistFile = Path.Combine(profilePath, "modlist.txt");
+                    // ASSUMED mods path is the parent directory of the gameMode.InstallationPath
+                    string modsPath = Directory.GetParent(gameMode.InstallationPath).FullName;
+                    // Prepare dummy data directory
+                    dummyFactory = new DummyDataFileUtilFactory(gameMode.GameModeEnvironmentInfo.InstallationPath, modlistFile, modsPath, gamePath, additionalSearchPaths);
+                    dataFileUtility = dummyFactory.CreateDummyDataFileUtil();
+
                     TxFileManager fileManager = new TxFileManager();
                     IInstallLog installLog = new DummyInstallLog();
                     IIniInstaller iniIniInstaller = new IniInstaller(mod, installLog, fileManager, delegate { return OverwriteResult.No; });
-                    IPluginManager pluginManager = new DummyPluginManager(pluginsFile, gameMode, mod);
+                    IPluginManager pluginManager = new DummyPluginManager(Path.Combine(profilePath, "plugins.txt"), gameMode, mod);
                     IGameSpecificValueInstaller gameSpecificValueInstaller = gameMode.GetGameSpecificValueInstaller(mod, installLog, fileManager, new NexusFileUtil(environmentInfo), delegate { return OverwriteResult.No; });
                     IModFileInstaller fileInstaller = new ModFileInstaller(gameMode.GameModeEnvironmentInfo, mod, installLog, pluginManager, dataFileUtility, fileManager, delegate { return OverwriteResult.No; }, false);
                     InstallerGroup installers = new InstallerGroup(dataFileUtility, fileInstaller, iniIniInstaller, gameSpecificValueInstaller, pluginManager);
-                    IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameMode, environmentInfo, installers, SynchronizationContext.Current);
+                    IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameModeProxied, environmentInfo, installers, SynchronizationContext.Current);
                     // read-only transactions are waaaay faster, especially for solid archives) because the extractor isn't recreated for every extraction (why exactly would it be otherwise?)
                     mod.BeginReadOnlyTransaction(fileUtil);
                     // run the script in a second thread and start the main loop in the main thread to ensure we can handle message boxes and the like
@@ -200,6 +232,7 @@ namespace Nexus.Client.CLI
                         iniIniInstaller.FinalizeInstall();
                         gameSpecificValueInstaller.FinalizeInstall();
                         mod.EndReadOnlyTransaction();
+
                         Application.Exit();
                     };
 
@@ -232,7 +265,14 @@ namespace Nexus.Client.CLI
             string game = null;
             string filename = null;
             string installationPath = null;
-            string pluginsFile = null;
+            string profilePath = null;
+            string gamePath = null;
+            string seVersion = null;
+            List<string> searchPaths = new List<string>();
+
+
+            // Default log verbosity, see Logger.Level
+            int loggerVerbosity = 4; // 0 for none, 9 for all
 
             // determine action
             for (int i = 0; i < args.Length; ++i)
@@ -241,7 +281,7 @@ namespace Nexus.Client.CLI
                 {
                     if (args.Length - i <= 1)
                     {
-                        Console.WriteLine("invalid number of parameters, expected game name");
+                        Logger.Error("invalid number of parameters, expected game name");
                         return 1;
                     }
                     ++i;
@@ -252,11 +292,12 @@ namespace Nexus.Client.CLI
                 {
                     if (args.Length - i <= 2)
                     {
-                        Console.WriteLine("invalid number of parameters, expected filename and installation path");
+                        Logger.Error("invalid number of parameters, expected filename and installation path");
                         return 1;
                     }
                     filename = args[i + 1];
                     installationPath = args[i + 2];
+                    Logger.SetLogDestination(installationPath);
                     i += 2;
                 }
 
@@ -264,16 +305,51 @@ namespace Nexus.Client.CLI
                 {
                     if (args.Length - i <= 1)
                     {
-                        Console.WriteLine("invalid number of parameters, expected plugins file");
+                        Logger.Error("invalid number of parameters, expected plugins file");
                         return 1;
                     }
                     ++i;
-                    pluginsFile = args[i];
+                    profilePath = args[i];
+                }
+
+                if (args[i].ToLower().Equals("/gd") || args[i].ToLower().Equals("-gd"))
+                {
+                    if (args.Length - i <= 1)
+                    {
+                        Logger.Error("invalid number of parameters, expected path name");
+                        return 1;
+                    }
+                    ++i;
+                    gamePath = args[i];
+                    searchPaths.Add(args[i] + "\\data");
+                }
+
+                if (args[i].ToLower().Equals("/d") || args[i].ToLower().Equals("-d"))
+                {
+                    if (args.Length - i <= 1)
+                    {
+                        Logger.Error("invalid number of parameters, expected path name");
+                        return 1;
+                    }
+                    ++i;
+                    searchPaths.Add(args[i]);
+                }
+                if (args[i].ToLower().Equals("/se") || args[i].ToLower().Equals("-se"))
+                {
+                    if (args.Length - i <= 1)
+                    {
+                        Logger.Error("invalid number of parameters, expected path name");
+                        return 1;
+                    }
+                    seVersion = args[++i];
                 }
             }
 
+            // Set logger verbosity level
+            Logger.SetVerbosity((Logger.Level)loggerVerbosity);
+
             string errorString = "";
-            int result = DoInstall(game, filename, installationPath, pluginsFile, ref errorString);
+            int result = DoInstall(game, filename, installationPath, profilePath, gamePath, searchPaths, seVersion, ref errorString);
             if ((result != 0) && (errorString.Length != 0))
             {
                 MessageBox.Show(errorString, "Installation Failed: " + result, MessageBoxButtons.OK, MessageBoxIcon.Error);

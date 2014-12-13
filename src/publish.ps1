@@ -44,6 +44,8 @@ Copy-Item "$NMMPATH\bin\Release\Transactions.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\UI.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\Util.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\WeifenLuo.WinFormsUI.Docking.dll" "$outputPath\NCC"
+# stored in repository in binary form
+Copy-Item "$scriptDirectory\NexusClientCLI\Castle.Core.dll" "$outputPath\NCC"
 
 New-Item -ItemType directory -Force -Path  "$outputPath\NCC\GameModes"
 Copy-Item "$NMMPATH\bin\Release\GameModes\Fallout3.*" "$outputPath\NCC\GameModes"
