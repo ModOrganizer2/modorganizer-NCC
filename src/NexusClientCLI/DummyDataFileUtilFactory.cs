@@ -36,6 +36,7 @@ namespace Nexus.Client.CLI
             m_installationPath = installationPath;
             m_gamePath = gamePath;
             m_searchPaths = additionalSearchPaths;
+            m_searchPaths.Add(Path.Combine(m_installationPath, "data"));
 
             StreamReader reader = new StreamReader(modlistFile);
             string line;
