@@ -44,8 +44,13 @@ namespace Nexus.Client.CLI
 
         public bool DataFileExists(string p_strPath)
         {
+            string unfixedPath = p_strPath;
+            if (unfixedPath.StartsWith("data", StringComparison.OrdinalIgnoreCase))
+            {
+                unfixedPath = unfixedPath.Substring(5);
+            }
             foreach (string path in SearchPaths) {
-                if (File.Exists(Path.Combine(path, p_strPath)))
+                if (File.Exists(Path.Combine(path, unfixedPath)))
                 {
                     return true;
                 }

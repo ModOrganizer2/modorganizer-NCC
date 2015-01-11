@@ -158,19 +158,6 @@ namespace Nexus.Client.CLI
 
                 IGameMode gameMode = gameModeFactory.BuildGameMode(fileUtil, out warning);
 
-                // use a proxy so we can intercept accesses to the IGameMode interface. This allows us to make the additional search paths accessible from
-                // the sandbox and feed in the script extender version even though the nmm lib won't find it.
-                // This is a massive hack and there is an issue: nmm tries to look up the location of the assembly (for whatever reason) and the proxy
-                // generated here is in a dynamic assembly and thus doesn't have a location. We will therefore feed the proxy only to the script executor
-                // and hope for the best
-                ProxyGenerator generator = new ProxyGenerator();
-                GameModeInterceptor interceptor = new GameModeInterceptor(additionalSearchPaths, seVersion != null ? new Version(seVersion) : null);
-
-                IGameMode gameModeProxied = (IGameMode)generator.CreateClassProxyWithTarget(gameMode.GetType(),
-                                                                           gameMode,
-                                                                           new object[] { environmentInfo, fileUtil },
-                                                                           new IInterceptor[] { interceptor });
-
                 IModCacheManager cacheManager = new NexusModCacheManager(environmentInfo.TemporaryPath, gameMode.GameModeEnvironmentInfo.ModDirectory, fileUtil);
 
                 IScriptTypeRegistry scriptTypeRegistry = ScriptTypeRegistry.DiscoverScriptTypes(Path.Combine(Path.GetDirectoryName(exeLocation), "ScriptTypes"), gameMode);
@@ -179,6 +166,16 @@ namespace Nexus.Client.CLI
                     errorString = "No script types were found.";
                     return 2;
                 }
+
+                // use a proxy so we can intercept accesses to the IGameMode interface. This allows us to make the additional search paths accessible from
+                // the sandbox and feed in the script extender version even though the nmm lib won't find it.
+                // This has to happen after DiscoverScriptTypes becaus that function tries to localize the assembly which fails for the dynamic assembly
+                // of the proxy. Fortunately DiscoverScriptTypes has no side-effects on the gameMode.
+                // This recreates the gamemode object so it's important no code above modifies gameMode
+                ProxyGenerator generator = new ProxyGenerator();
+                GameModeInterceptor interceptor = new GameModeInterceptor(additionalSearchPaths, seVersion != null ? new Version(seVersion) : null);
+
+                gameMode = (IGameMode)generator.CreateClassProxy(gameMode.GetType(), new object[] { environmentInfo, fileUtil }, new IInterceptor[] { interceptor });
 
                 IModFormatRegistry formatRegistry = ModFormatRegistry.DiscoverFormats(cacheManager, scriptTypeRegistry, Path.Combine(Path.GetDirectoryName(exeLocation), "ModFormats"));
                 if (formatRegistry.Formats.Count == 0)
@@ -220,7 +217,7 @@ namespace Nexus.Client.CLI
                     IGameSpecificValueInstaller gameSpecificValueInstaller = gameMode.GetGameSpecificValueInstaller(mod, installLog, fileManager, new NexusFileUtil(environmentInfo), delegate { return OverwriteResult.No; });
                     IModFileInstaller fileInstaller = new ModFileInstaller(gameMode.GameModeEnvironmentInfo, mod, installLog, pluginManager, dataFileUtility, fileManager, delegate { return OverwriteResult.No; }, false);
                     InstallerGroup installers = new InstallerGroup(dataFileUtility, fileInstaller, iniIniInstaller, gameSpecificValueInstaller, pluginManager);
-                    IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameModeProxied, environmentInfo, installers, SynchronizationContext.Current);
+                    IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameMode, environmentInfo, installers, SynchronizationContext.Current);
                     // read-only transactions are waaaay faster, especially for solid archives) because the extractor isn't recreated for every extraction (why exactly would it be otherwise?)
                     mod.BeginReadOnlyTransaction(fileUtil);
                     // run the script in a second thread and start the main loop in the main thread to ensure we can handle message boxes and the like
