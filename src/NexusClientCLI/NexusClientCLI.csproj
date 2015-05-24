@@ -10,12 +10,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nexus.Client.CLI</RootNamespace>
     <AssemblyName>NexusClientCLI</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <NoWin32Manifest>False</NoWin32Manifest>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
@@ -139,7 +138,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>PdbOnly</DebugType>
     <Optimize>True</Optimize>
-    <OutputPath>..\bin\Release\</OutputPath>
+    <OutputPath>..\nmm\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -150,6 +149,9 @@
     <BaseAddress>4194304</BaseAddress>
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core">
@@ -170,7 +172,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameModeInterceptor.cs" />
-    <Compile Include="GameModeWrapper.cs" />
     <Compile Include="DummyDataFileUtilFactory.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="DummyDataFileUtil.cs" />
@@ -181,7 +182,6 @@
     <Compile Include="ModManagement\IniMethods.cs" />
     <Compile Include="ModManagement\ModExtension.cs" />
     <Compile Include="ModManagement\ModFileInstaller.cs" />
-    <Compile Include="ModManagement\Scripting\IScriptExtensions.cs" />
     <Compile Include="Mods\NexusModCacheManager.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Program.cs" />
@@ -198,6 +198,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -259,7 +260,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ModManagement\Scripting\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
