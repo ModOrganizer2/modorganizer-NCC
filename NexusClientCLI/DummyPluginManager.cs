@@ -19,6 +19,8 @@ using Nexus.Client.Plugins;
 using Nexus.Client.Util.Collections;
 using Nexus.Client.Games;
 using Nexus.Client.Mods;
+using Nexus.Client.UI;
+using Nexus.Client.BackgroundTasks;
 
 
 namespace Nexus.Client.PluginManagement
@@ -88,6 +90,16 @@ namespace Nexus.Client.PluginManagement
         public void RemovePlugin(string p_strPluginPath)
         {
             // nop
+        }
+
+        public IBackgroundTask AutoPluginSorting(ConfirmActionMethod p_camConfirm)
+        {
+            return null;
+        }
+
+        public IBackgroundTask ManageMultiplePluginsTask(List<Plugin> p_lstPlugins, bool p_booEnable, ConfirmActionMethod p_camConfirm)
+        {
+            return null;
         }
 
         public bool IsPluginRegistered(string p_strPath)

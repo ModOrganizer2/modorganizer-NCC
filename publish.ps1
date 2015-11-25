@@ -1,17 +1,22 @@
 param (
     [switch]$debug = $false,
-    [switch]$release = $false
+    [switch]$release = $false,
+    [string]$outputPath = ""
 )
 
 $ErrorActionPreference = "Stop"
 
 if ($debug) {
     $releaseType = "debug"
-    $outputPath = "..\..\outputd" 
+    if ($outputPath -eq "") {
+        $outputPath = "..\..\outputd"
+    }
 } 
 elseif ($release) {
     $releaseType = "release"
-    $outputPath = "..\..\output" 
+    if ($outputPath -eq "") {
+        $outputPath = "..\..\output"
+    }
 }
 else {
 	Write-Host "Usage: publish.ps1 <-debug|-release>"
@@ -25,18 +30,16 @@ Write-Host ""
 
 $scriptDirectory = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
-$NMMPath = "$scriptDirectory\NMM"
+$NMMPath = "$scriptDirectory\..\NMM"
 
 New-Item -ItemType directory -Force -Path  "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\ChinhDo.Transactions.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\Commanding.dll" "$outputPath\NCC"
-Copy-Item "$NMMPATH\bin\Release\GamebryoBase.dll" "$outputPath\NCC"
+# Copy-Item "$NMMPATH\bin\Release\GamebryoBase.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\ICSharpCode.TextEditor.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\ModManager.Interface.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\Mods.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\NexusClient.Interface.dll" "$outputPath\NCC"
-Copy-Item "$NMMPATH\bin\Release\NexusClientCLI.exe" "$outputPath\NCC"
-Copy-Item "$NMMPATH\bin\Release\NexusClientCLI.exe.config" "$outputPath\NCC"
 # Copy-Item "$NMMPATH\bin\Release\NexusClientCLI.exe.manifest" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\Scripting.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\SevenZipSharp.dll" "$outputPath\NCC"
@@ -44,6 +47,8 @@ Copy-Item "$NMMPATH\bin\Release\Transactions.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\UI.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\Util.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\WeifenLuo.WinFormsUI.Docking.dll" "$outputPath\NCC"
+Copy-Item "$scriptDirectory\bin\Release\NexusClientCLI.exe" "$outputPath\NCC"
+Copy-Item "$scriptDirectory\bin\Release\NexusClientCLI.exe.config" "$outputPath\NCC"
 # stored in repository in binary form
 Copy-Item "$scriptDirectory\NexusClientCLI\Castle.Core.dll" "$outputPath\NCC"
 
