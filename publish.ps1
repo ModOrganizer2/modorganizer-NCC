@@ -6,25 +6,9 @@ param (
 
 $ErrorActionPreference = "Stop"
 
-if ($debug) {
-    $releaseType = "debug"
-    if ($outputPath -eq "") {
-        $outputPath = "..\..\outputd"
-    }
-} 
-elseif ($release) {
-    $releaseType = "release"
-    if ($outputPath -eq "") {
-        $outputPath = "..\..\output"
-    }
-}
-else {
-	Write-Host "Usage: publish.ps1 <-debug|-release>"
-    exit 1
-}
+$outputPath = "..\..\..\install\bin"
 
 Write-Host "Publishing NCC build."
-Write-Host "Release type: $releaseType"
 Write-Host "Output directory: $outputPath"
 Write-Host ""
 
@@ -47,10 +31,10 @@ Copy-Item "$NMMPATH\bin\Release\Transactions.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\UI.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\Util.dll" "$outputPath\NCC"
 Copy-Item "$NMMPATH\bin\Release\WeifenLuo.WinFormsUI.Docking.dll" "$outputPath\NCC"
-Copy-Item "$scriptDirectory\bin\Release\NexusClientCLI.exe" "$outputPath\NCC"
-Copy-Item "$scriptDirectory\bin\Release\NexusClientCLI.exe.config" "$outputPath\NCC"
+Copy-Item "$NMMPATH\bin\Release\NexusClientCLI.exe" "$outputPath\NCC"
+Copy-Item "$NMMPATH\bin\Release\NexusClientCLI.exe.config" "$outputPath\NCC"
 # stored in repository in binary form
-Copy-Item "$scriptDirectory\NexusClientCLI\Castle.Core.dll" "$outputPath\NCC"
+Copy-Item "$NMMPATH\bin\Release\Castle.Core.dll" "$outputPath\NCC"
 
 New-Item -ItemType directory -Force -Path  "$outputPath\NCC\GameModes"
 Copy-Item "$NMMPATH\bin\Release\GameModes\Fallout3.*" "$outputPath\NCC\GameModes"

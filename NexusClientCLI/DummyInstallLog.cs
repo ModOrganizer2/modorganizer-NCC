@@ -265,5 +265,15 @@ namespace Nexus.Client.ModManagement.InstallationLog
         {
             // nop
         }
+
+        public byte[] GetXMLModList()
+        {
+          throw new NotImplementedException();
+        }
+
+        public byte[] GetXMLIniList()
+        {
+          throw new NotImplementedException();
+        }
     }
 }

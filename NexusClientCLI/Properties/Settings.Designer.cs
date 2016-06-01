@@ -465,12 +465,148 @@ namespace Nexus.Client.CLI.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<KeyedSettingsOfString />")]
-        public global::Nexus.Client.Settings.KeyedSettings<string> HelpLinks {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowStartupMessage {
             get {
-                return ((global::Nexus.Client.Settings.KeyedSettings<string>)(this["HelpLinks"]));
+                return ((bool)(this["ShowStartupMessage"]));
+            }
+            set {
+                this["ShowStartupMessage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CheckForTipsOnStartup {
+            get {
+                return ((bool)(this["CheckForTipsOnStartup"]));
+            }
+            set {
+                this["CheckForTipsOnStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoPluginSorting {
+            get {
+                return ((bool)(this["AutoPluginSorting"]));
+            }
+            set {
+                this["AutoPluginSorting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ManageMultiplePluginTask {
+            get {
+                return ((bool)(this["ManageMultiplePluginTask"]));
+            }
+            set {
+                this["ManageMultiplePluginTask"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<PerGameModeSettingsOfKeyedSettingsOfStr" +
+            "ing />")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<string>> SupportedTools {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<string>>)(this["SupportedTools"]));
+            }
+            set {
+                this["SupportedTools"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<PerGameModeSettingsOfString />")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<string> VirtualFolder {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["VirtualFolder"]));
+            }
+            set {
+                this["VirtualFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<PerGameModeSettingsOfString />")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<string> HDLinkFolder {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["HDLinkFolder"]));
+            }
+            set {
+                this["HDLinkFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<PerGameModeSettingsOfBoolean />")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<bool> MultiHDInstall {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<bool>)(this["MultiHDInstall"]));
+            }
+            set {
+                this["MultiHDInstall"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowAlphaDisclaimer {
+            get {
+                return ((bool)(this["ShowAlphaDisclaimer"]));
+            }
+            set {
+                this["ShowAlphaDisclaimer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowFallout4UpgradeDisclaimer {
+            get {
+                return ((bool)(this["ShowFallout4UpgradeDisclaimer"]));
+            }
+            set {
+                this["ShowFallout4UpgradeDisclaimer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ForceHardLinks {
+            get {
+                return ((bool)(this["ForceHardLinks"]));
+            }
+            set {
+                this["ForceHardLinks"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CacheOverhaulSetup {
+            get {
+                return ((bool)(this["CacheOverhaulSetup"]));
+            }
+            set {
+                this["CacheOverhaulSetup"] = value;
             }
         }
         
@@ -483,6 +619,24 @@ namespace Nexus.Client.CLI.Properties {
             }
             set {
                 this["InstallationPaths"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<KeyedSettingsOfString />")]
+        public global::Nexus.Client.Settings.KeyedSettings<string> HelpLinks {
+            get {
+                return ((global::Nexus.Client.Settings.KeyedSettings<string>)(this["HelpLinks"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<PerGameModeSettingsOfString />")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<string> ToolFolder {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["ToolFolder"]));
             }
         }
         
@@ -656,60 +810,136 @@ namespace Nexus.Client.CLI.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<PerGameModeSettingsOfString />")]
-        public global::Nexus.Client.Settings.PerGameModeSettings<string> ToolFolder {
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <ArrayOfString xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns" +
+            ":xsd=\"http://www.w3.org/2001/XMLSchema\" />\r\n    ")]
+        public global::Nexus.Client.Settings.SettingsList InstalledGames1 {
             get {
-                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["ToolFolder"]));
+                return ((global::Nexus.Client.Settings.SettingsList)(this["InstalledGames1"]));
+            }
+            set {
+                this["InstalledGames1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowStartupMessage {
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfKeyedSettingsOfAddModDescriptor />\r\n    ")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<Nexus.Client.ModManagement.AddModDescriptor>> QueuedModsToAdd1 {
             get {
-                return ((bool)(this["ShowStartupMessage"]));
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<Nexus.Client.ModManagement.AddModDescriptor>>)(this["QueuedModsToAdd1"]));
             }
             set {
-                this["ShowStartupMessage"] = value;
+                this["QueuedModsToAdd1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CheckForTipsOnStartup {
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <WindowPositions />\r\n    ")]
+        public global::Nexus.Client.Settings.WindowPositions WindowPositions1 {
             get {
-                return ((bool)(this["CheckForTipsOnStartup"]));
+                return ((global::Nexus.Client.Settings.WindowPositions)(this["WindowPositions1"]));
             }
             set {
-                this["CheckForTipsOnStartup"] = value;
+                this["WindowPositions1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoPluginSorting {
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <ColumnWidths />\r\n    ")]
+        public global::Nexus.Client.Settings.ColumnWidths ColumnWidths1 {
             get {
-                return ((bool)(this["AutoPluginSorting"]));
+                return ((global::Nexus.Client.Settings.ColumnWidths)(this["ColumnWidths1"]));
             }
             set {
-                this["AutoPluginSorting"] = value;
+                this["ColumnWidths1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ManageMultiplePluginTask {
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <SplitterSizes />\r\n    ")]
+        public global::Nexus.Client.Settings.SplitterSizes SplitterSizes1 {
             get {
-                return ((bool)(this["ManageMultiplePluginTask"]));
+                return ((global::Nexus.Client.Settings.SplitterSizes)(this["SplitterSizes1"]));
             }
             set {
-                this["ManageMultiplePluginTask"] = value;
+                this["SplitterSizes1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfString />\r\n    ")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<string> ToolFolder1 {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["ToolFolder1"]));
+            }
+            set {
+                this["ToolFolder1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfKeyedSettingsOfString />\r\n    ")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<string>> SupportedTools1 {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<string>>)(this["SupportedTools1"]));
+            }
+            set {
+                this["SupportedTools1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfString />\r\n    ")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<string> VirtualFolder1 {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["VirtualFolder1"]));
+            }
+            set {
+                this["VirtualFolder1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfString />\r\n    ")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<string> HDLinkFolder1 {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["HDLinkFolder1"]));
+            }
+            set {
+                this["HDLinkFolder1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfBoolean />\r\n    ")]
+        public global::Nexus.Client.Settings.PerGameModeSettings<bool> MultiHDInstall1 {
+            get {
+                return ((global::Nexus.Client.Settings.PerGameModeSettings<bool>)(this["MultiHDInstall1"]));
+            }
+            set {
+                this["MultiHDInstall1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OverrideLocalModNames {
+            get {
+                return ((bool)(this["OverrideLocalModNames"]));
+            }
+            set {
+                this["OverrideLocalModNames"] = value;
             }
         }
     }

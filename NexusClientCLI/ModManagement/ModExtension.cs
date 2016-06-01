@@ -1,4 +1,4 @@
-﻿using Nexus.Client.Mods;
+﻿/*using Nexus.Client.Mods;
 //using Nexus.Client.Mods.Formats.FOMod;
 //using Nexus.Client.Mods.Formats.OMod;
 using Nexus.Client.Util;
@@ -85,19 +85,6 @@ namespace Extensions
 		/// <param name="p_outStream">The stream to write to.</param>
 		/// <exception cref="System.IO.FileNotFoundException">Thrown if the specified file
 		/// is not in the mod.</exception>
-/*		public static void ExtractFileTo(this OMod mod, string p_strFile, Stream p_outStream)
-		{
-            byte[] data = mod.GetFile(p_strFile);
-            p_outStream.Write(data, 0, data.Length);
-		} */
-
-		/// <summary>
-		/// write the specified file to a stream
-		/// </summary>
-		/// <param name="p_strFile">The file to retrieve.</param>
-		/// <param name="p_outStream">The stream to write to.</param>
-		/// <exception cref="System.IO.FileNotFoundException">Thrown if the specified file
-		/// is not in the mod.</exception>
 		public static void ExtractFileTo<T>(this T mod, string p_strFile, Stream p_outStream)
 		{
             string realPath = (string) mod.CallPrivateMethod<string>("GetRealPath", new object[] { p_strFile });
@@ -122,4 +109,4 @@ namespace Extensions
    }
 }
 
-
+*/

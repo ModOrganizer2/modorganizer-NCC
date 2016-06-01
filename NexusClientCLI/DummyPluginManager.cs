@@ -34,7 +34,7 @@ namespace Nexus.Client.PluginManagement
         {
             StreamReader reader = new StreamReader(pluginsFile);
             
-            string installationPath = Path.Combine(gameMode.GameModeEnvironmentInfo.InstallationPath, gameMode.GetModFormatAdjustedPath(mod.Format, null));
+            string installationPath = Path.Combine(gameMode.GameModeEnvironmentInfo.InstallationPath, gameMode.GetModFormatAdjustedPath(mod.Format, null, false));
 
             string line;
             while ((line = reader.ReadLine()) != null)
@@ -196,5 +196,15 @@ namespace Nexus.Client.PluginManagement
 				return 255;
 			}
 		}
+
+    public List<Plugin> GetOrphanedPlugins(string p_strMasterName)
+    {
+      throw new NotImplementedException();
+    }
+
+    public string GetPluginDescription(string p_strPlugin)
+    {
+      throw new NotImplementedException();
+    }
     }
 }

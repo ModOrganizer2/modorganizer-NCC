@@ -148,7 +148,8 @@ namespace Nexus.Client.CLI
 
                 environmentInfo.Settings.InstallationPaths[gameModeFactory.GameModeDescriptor.ModeId] = installationPath;
                 environmentInfo.Settings.ModFolder[gameModeFactory.GameModeDescriptor.ModeId] = installationPath;
-                environmentInfo.Settings.InstallInfoFolder[gameModeFactory.GameModeDescriptor.ModeId] = environmentInfo.TemporaryPath;
+//                environmentInfo.Settings.InstallInfoFolder[gameModeFactory.GameModeDescriptor.ModeId] = environmentInfo.TemporaryPath;
+                environmentInfo.Settings.InstallInfoFolder[gameModeFactory.GameModeDescriptor.ModeId] = Path.Combine(installationPath, "temp");
                 if (environmentInfo.Settings.DelayedSettings[gameModeFactory.GameModeDescriptor.ModeId] == null)
                     environmentInfo.Settings.DelayedSettings[gameModeFactory.GameModeDescriptor.ModeId] = new KeyedSettings<string>();
                 if (environmentInfo.Settings.DelayedSettings["ALL"] == null)
@@ -160,7 +161,7 @@ namespace Nexus.Client.CLI
 
                 IModCacheManager cacheManager = new NexusModCacheManager(environmentInfo.TemporaryPath, gameMode.GameModeEnvironmentInfo.ModDirectory, fileUtil);
 
-                IScriptTypeRegistry scriptTypeRegistry = ScriptTypeRegistry.DiscoverScriptTypes(Path.Combine(Path.GetDirectoryName(exeLocation), "ScriptTypes"), gameMode);
+                IScriptTypeRegistry scriptTypeRegistry = ScriptTypeRegistry.DiscoverScriptTypes(Path.Combine(Path.GetDirectoryName(exeLocation), "ScriptTypes"), gameMode, new List<string>());
                 if (scriptTypeRegistry.Types.Count == 0)
                 {
                     errorString = "No script types were found.";
@@ -177,7 +178,7 @@ namespace Nexus.Client.CLI
 
                 gameMode = (IGameMode)generator.CreateClassProxy(gameMode.GetType(), new object[] { environmentInfo, fileUtil }, new IInterceptor[] { interceptor });
 
-                IModFormatRegistry formatRegistry = ModFormatRegistry.DiscoverFormats(cacheManager, scriptTypeRegistry, Path.Combine(Path.GetDirectoryName(exeLocation), "ModFormats"));
+                IModFormatRegistry formatRegistry = ModFormatRegistry.DiscoverFormats(cacheManager, gameMode.SupportedFormats, scriptTypeRegistry, Path.Combine(Path.GetDirectoryName(exeLocation), "ModFormats"));
                 if (formatRegistry.Formats.Count == 0)
                 {
                     errorString = "No formats were found.";
@@ -217,7 +218,8 @@ namespace Nexus.Client.CLI
                     IGameSpecificValueInstaller gameSpecificValueInstaller = gameMode.GetGameSpecificValueInstaller(mod, installLog, fileManager, new NexusFileUtil(environmentInfo), delegate { return OverwriteResult.No; });
                     IModFileInstaller fileInstaller = new ModFileInstaller(gameMode.GameModeEnvironmentInfo, mod, installLog, pluginManager, dataFileUtility, fileManager, delegate { return OverwriteResult.No; }, false);
                     InstallerGroup installers = new InstallerGroup(dataFileUtility, fileInstaller, iniIniInstaller, gameSpecificValueInstaller, pluginManager);
-                    IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameMode, environmentInfo, installers, SynchronizationContext.Current);
+                    IVirtualModActivator modActivator = new DummyVirtualModActivator(gameMode, environmentInfo);
+                    IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameMode, environmentInfo, modActivator, installers, SynchronizationContext.Current);
                     // read-only transactions are waaaay faster, especially for solid archives) because the extractor isn't recreated for every extraction (why exactly would it be otherwise?)
                     mod.BeginReadOnlyTransaction(fileUtil);
                     // run the script in a second thread and start the main loop in the main thread to ensure we can handle message boxes and the like

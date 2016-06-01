@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
+using System.Linq;
 using Nexus.Client.ModManagement.Scripting;
 using Nexus.Client.ModManagement.InstallationLog;
 using Nexus.Client.Mods;
@@ -9,7 +10,8 @@ using Nexus.Client.PluginManagement;
 using Nexus.Client.Util;
 using Nexus.Client.Games;
 using ChinhDo.Transactions;
-using Extensions;
+//using Extensions;
+using System.Text.RegularExpressions;
 
 namespace Nexus.Client.ModManagement
 {
@@ -193,13 +195,26 @@ namespace Nexus.Client.ModManagement
         /// <param name="p_strInstallPath">The path on the file system where the file is to be installed.</param>
         /// <returns><c>true</c> if the file was written; <c>false</c> if the user chose
         /// not to overwrite an existing file.</returns>
-        public bool InstallFileFromMod(string p_strModFilePath, string p_strInstallPath, bool p_booSecondaryInstallPath)
+        public bool InstallFileFromMod(string p_strModFilePath, string p_strInstallPath)
         {
-            Console.WriteLine("install " + p_strModFilePath + " to " + p_strInstallPath);
-            string destinationPath = installPath(p_strInstallPath, p_booSecondaryInstallPath);
+			try
+			{
+				byte[] bteModFile = Mod.GetFile(p_strModFilePath);
+				return GenerateDataFile(p_strInstallPath, bteModFile);
+			}
+			catch (FileNotFoundException)
+			{
+				return false;
+			}
+
+/*
+
+            string[] components = p_strInstallPath.Split(Path.DirectorySeparatorChar);
+            p_strInstallPath = string.Join("" + Path.DirectorySeparatorChar, components.Skip(1).Take(components.Length - 1).ToArray());
+            string destinationPath = installPath(p_strInstallPath);
 
             if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
-                TransactionalFileManager.CreateDirectory(Path.GetDirectoryName(destinationPath));
+                CreateDirectory(Path.GetDirectoryName(destinationPath));
             else
             {
                 if (!TestDoOverwrite(p_strInstallPath))
@@ -226,7 +241,7 @@ namespace Nexus.Client.ModManagement
                         //back up the current version of the file if the current mod
                         // didn't install it
                         if (!Directory.Exists(strBackupDirectory))
-                            TransactionalFileManager.CreateDirectory(strBackupDirectory);
+                            CreateDirectory(strBackupDirectory);
 
                         //we get the file name this way in order to preserve the file name's case
                         string strFile = Path.GetFileName(Directory.GetFiles(Path.GetDirectoryName(destinationPath), Path.GetFileName(destinationPath))[0]);
@@ -250,11 +265,11 @@ namespace Nexus.Client.ModManagement
             }
             catch (FileNotFoundException e)
             {
-            	MessageBox.Show("File " + p_strModFilePath + " couldn't be extracted.\n" +
+              MessageBox.Show("File " + p_strModFilePath + " couldn't be extracted.\n" +
                                 "This probably means the mod is broken though you may still get partial functionality.\n" +
                                 "Please inform the mod author.\n" +
                                 "Detailed Error: " + e.Message, "File not found in FOMod", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    			File.Delete(destinationPath);
+          File.Delete(destinationPath);
                 throw;
             }
             catch (Exception ex)
@@ -269,19 +284,33 @@ namespace Nexus.Client.ModManagement
                     PluginManager.AddPlugin(destinationPath);
             InstallLog.AddDataFile(Mod, p_strInstallPath);
             return IsPlugin;
+ */
         }
 
-        private string installPath(string installPath, bool useSecondaryInstallPath)
+        private string installPath(string installPath)
         {
             DataFileUtility.AssertFilePathIsSafe(installPath);
-            string result = null;
+            return Path.Combine(GameModeInfo.InstallationPath, installPath);
+        }
 
-            if (useSecondaryInstallPath && !(String.IsNullOrEmpty(GameModeInfo.SecondaryInstallationPath)))
-                result = Path.Combine(GameModeInfo.SecondaryInstallationPath, installPath);
-            else
-                result = Path.Combine(GameModeInfo.InstallationPath, installPath);
+        private static readonly Regex m_rgxCleanPath = new Regex("[" + Path.DirectorySeparatorChar + Path.AltDirectorySeparatorChar + "]{1,}");
 
-            return result;
+        private void CreateDirectoryRecursion(string[] paths, int roffset)
+        {
+            string path = string.Join("" + Path.DirectorySeparatorChar, paths.Take(paths.Length - roffset).ToArray());
+            if (!Directory.Exists(path)) {
+                CreateDirectoryRecursion(paths, roffset + 1);
+                Directory.CreateDirectory(path);
+            }
+        }
+
+        private void CreateDirectory(string path)
+        {
+            string normalizedPath = m_rgxCleanPath.Replace(Path.GetFullPath(path), Path.DirectorySeparatorChar.ToString());
+
+            string[] paths = normalizedPath.Split(Path.DirectorySeparatorChar);
+
+            CreateDirectoryRecursion(paths, 0);
         }
 
         /// <summary>
@@ -297,19 +326,24 @@ namespace Nexus.Client.ModManagement
         /// not to overwrite an existing file.</returns>
         /// <exception cref="IllegalFilePathException">Thrown if <paramref name="p_strPath"/> is
         /// not safe.</exception>
-        public virtual bool GenerateDataFile(string p_strPath, byte[] p_bteData, bool p_booSecondaryInstallPath)
+        public virtual bool GenerateDataFile(string p_strPath, byte[] p_bteData)
         {
             DataFileUtility.AssertFilePathIsSafe(p_strPath);
-            string strInstallFilePath = null;
 
-            if (p_booSecondaryInstallPath && !(String.IsNullOrEmpty(GameModeInfo.SecondaryInstallationPath)))
-                strInstallFilePath = Path.Combine(GameModeInfo.SecondaryInstallationPath, p_strPath);
-            else
-                strInstallFilePath = Path.Combine(GameModeInfo.InstallationPath, p_strPath);
+            string[] components = p_strPath.Split(Path.DirectorySeparatorChar);
+            p_strPath = string.Join("" + Path.DirectorySeparatorChar, components.Skip(1).Take(components.Length - 1).ToArray());
+            string strInstallFilePath = installPath(p_strPath);
+
+
+            //string strInstallFilePath = null;
+            //strInstallFilePath = Path.Combine(GameModeInfo.InstallationPath, p_strPath);
+
+            string installDirPath = Path.GetDirectoryName(strInstallFilePath);
 
             FileInfo Info = new FileInfo(strInstallFilePath);
-            if (!Directory.Exists(Path.GetDirectoryName(strInstallFilePath)))
-                TransactionalFileManager.CreateDirectory(Path.GetDirectoryName(strInstallFilePath));
+            if (!Directory.Exists(installDirPath)) {
+                CreateDirectory(installDirPath);
+            }
             else
             {
                 if (!TestDoOverwrite(p_strPath))
@@ -335,10 +369,10 @@ namespace Nexus.Client.ModManagement
                         //back up the current version of the file if the current mod
                         // didn't install it
                         if (!Directory.Exists(strBackupDirectory))
-                            TransactionalFileManager.CreateDirectory(strBackupDirectory);
+                            CreateDirectory(strBackupDirectory);
 
                         //we get the file name this way in order to preserve the file name's case
-                        string strFile = Path.GetFileName(Directory.GetFiles(Path.GetDirectoryName(strInstallFilePath), Path.GetFileName(strInstallFilePath))[0]);
+                        string strFile = Path.GetFileName(Directory.GetFiles(installDirPath, Path.GetFileName(strInstallFilePath))[0]);
                         strFile = strOldModKey + "_" + strFile;
 
                         string strBackupFilePath = Path.Combine(strBackupDirectory, strFile);
@@ -367,9 +401,10 @@ namespace Nexus.Client.ModManagement
         /// </remarks>
         /// <param name="p_strPath">The path to the file that is to be uninstalled.</param>
         /// <param name="p_booSecondaryInstallPath">Whether to use the secondary install path.</param>
-        public void UninstallDataFile(string p_strPath, bool p_booSecondaryInstallPath)
+        public bool UninstallDataFile(string p_strPath)
         {
-            // NOP - Not supported in CLI version
+          // NOP - Not supported in CLI version
+          return false;
         }
 
         /// <summary>
@@ -406,6 +441,11 @@ namespace Nexus.Client.ModManagement
             get {
                 return new List<string>();
             }
+        }
+
+        public bool PluginCheck(string p_strPath, bool p_booRemove)
+        {
+          throw new NotImplementedException();
         }
     }
 }
