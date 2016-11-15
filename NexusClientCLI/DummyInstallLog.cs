@@ -23,13 +23,13 @@ namespace Nexus.Client.ModManagement.InstallationLog
 {
     class DummyInstallLog : IInstallLog
     {
-        
-        private Dictionary<string, Pair<IMod, string> > m_InstalledFiles = null;
+
+        private Dictionary<string, Pair<IMod, string>> m_InstalledFiles = null;
         private Set<string> m_UsedKeys = null;
 
         public DummyInstallLog()
         {
-            
+
             m_InstalledFiles = new Dictionary<string, Pair<IMod, string>>();
             m_UsedKeys = new Set<string>();
         }
@@ -100,44 +100,44 @@ namespace Nexus.Client.ModManagement.InstallationLog
         }
 
         public void AddIniEdit(IMod p_modInstallingMod, string p_strSettingsFileName, string p_strSection, string p_strKey, string p_strValue)
-    {
-      // nop
-    }
+        {
+            // nop
+        }
 
-    public void ReplaceIniEdit(IMod p_modInstallingMod, string p_strSettingsFileName, string p_strSection, string p_strKey, string p_strValue)
-    {
-      // nop
-    }
+        public void ReplaceIniEdit(IMod p_modInstallingMod, string p_strSettingsFileName, string p_strSection, string p_strKey, string p_strValue)
+        {
+            // nop
+        }
 
-    public void RemoveIniEdit(IMod p_modInstallingMod, string p_strSettingsFileName, string p_strSection, string p_strKey)
-    {
-      // nop
-    }
+        public void RemoveIniEdit(IMod p_modInstallingMod, string p_strSettingsFileName, string p_strSection, string p_strKey)
+        {
+            // nop
+        }
 
-    public IMod GetCurrentIniEditOwner(string p_strSettingsFileName, string p_strSection, string p_strKey)
-    {
-      return null;
-    }
+        public IMod GetCurrentIniEditOwner(string p_strSettingsFileName, string p_strSection, string p_strKey)
+        {
+            return null;
+        }
 
-    public string GetCurrentIniEditOwnerKey(string p_strSettingsFileName, string p_strSection, string p_strKey)
-    {
-      return null;
-    }
+        public string GetCurrentIniEditOwnerKey(string p_strSettingsFileName, string p_strSection, string p_strKey)
+        {
+            return null;
+        }
 
-    public string GetPreviousIniValue(string p_strSettingsFileName, string p_strSection, string p_strKey)
-    {
-      return null;
-    }
+        public string GetPreviousIniValue(string p_strSettingsFileName, string p_strSection, string p_strKey)
+        {
+            return null;
+        }
 
-    public void LogOriginalIniValue(string p_strSettingsFileName, string p_strSection, string p_strKey, string p_strValue)
-    {
-      // nop
-    }
+        public void LogOriginalIniValue(string p_strSettingsFileName, string p_strSection, string p_strKey, string p_strValue)
+        {
+            // nop
+        }
 
-    public IList<IniEdit> GetInstalledIniEdits(IMod p_modInstaller)
-    {
-      return null;
-    }
+        public IList<IniEdit> GetInstalledIniEdits(IMod p_modInstaller)
+        {
+            return null;
+        }
 
         public IList<IMod> GetIniEditInstallers(string p_strSettingsFileName, string p_strSection, string p_strKey)
         {
@@ -156,18 +156,18 @@ namespace Nexus.Client.ModManagement.InstallationLog
         }
 
         public void AddDataFile(IMod p_modInstallingMod, string p_strDataFilePath)
-    {
+        {
             string key = GenerateKey();
             m_InstalledFiles[p_strDataFilePath.ToLower()] = new Pair<IMod, string>(p_modInstallingMod, key);
-    }
+        }
 
-    public void RemoveDataFile(IMod p_modInstallingMod, string p_strDataFilePath)
-    {
+        public void RemoveDataFile(IMod p_modInstallingMod, string p_strDataFilePath)
+        {
             m_InstalledFiles.Remove(p_strDataFilePath.ToLower());
-    }
+        }
 
-    public IMod GetCurrentFileOwner(string p_strPath)
-    {
+        public IMod GetCurrentFileOwner(string p_strPath)
+        {
             string strPathLower = p_strPath.ToLower();
             if (m_InstalledFiles.ContainsKey(strPathLower))
             {
@@ -177,15 +177,15 @@ namespace Nexus.Client.ModManagement.InstallationLog
             {
                 return null;
             }
-    }
+        }
 
-    public IMod GetPreviousFileOwner(string p_strPath)
-    {
-      return null;
-    }
+        public IMod GetPreviousFileOwner(string p_strPath)
+        {
+            return null;
+        }
 
-    public string GetCurrentFileOwnerKey(string p_strPath)
-    {
+        public string GetCurrentFileOwnerKey(string p_strPath)
+        {
             string strPathLower = p_strPath.ToLower();
             if (m_InstalledFiles.ContainsKey(strPathLower))
             {
@@ -197,18 +197,18 @@ namespace Nexus.Client.ModManagement.InstallationLog
             }
         }
 
-    public string GetPreviousFileOwnerKey(string p_strPath)
-    {
-      return null;
-    }
+        public string GetPreviousFileOwnerKey(string p_strPath)
+        {
+            return null;
+        }
 
-    public void LogOriginalDataFile(string p_strDataFilePath)
-    {
-      // nop
-    }
+        public void LogOriginalDataFile(string p_strDataFilePath)
+        {
+            // nop
+        }
 
-    public IList<string> GetInstalledModFiles(IMod p_modInstaller)
-    {
+        public IList<string> GetInstalledModFiles(IMod p_modInstaller)
+        {
             Set<string> result = new Set<string>();
             foreach (KeyValuePair<string, Pair<IMod, string>> file in m_InstalledFiles)
             {
@@ -217,8 +217,8 @@ namespace Nexus.Client.ModManagement.InstallationLog
                     result.Add(file.Key);
                 }
             }
-      return result;
-    }
+            return result;
+        }
 
         public IList<IMod> GetFileInstallers(string p_strPath)
         {
@@ -232,24 +232,26 @@ namespace Nexus.Client.ModManagement.InstallationLog
         }
 
         public void AddActiveMod(IMod p_modMod)
-    {
-      // nop
-    }
+        {
+            // nop
+        }
 
-    public void ReplaceActiveMod(IMod p_modOldMod, IMod p_modNewMod)
-    {
-      // nop
-    }
+        public void ReplaceActiveMod(IMod p_modOldMod, IMod p_modNewMod)
+        {
+            // nop
+        }
 
-    public string GetModKey(IMod p_modMod)
-    {
-      return null;
-    }
+        public string GetModKey(IMod p_modMod)
+        {
+            return null;
+        }
 
-/*		protected IMod GetMod(string p_strKey)
-    {
-      return null;
-    }*/
+        /*
+        protected IMod GetMod(string p_strKey)
+        {
+            return null;
+        }
+        */
 
         public IEnumerable<KeyValuePair<IMod, IMod>> GetMismatchedVersionMods()
         {
@@ -268,12 +270,17 @@ namespace Nexus.Client.ModManagement.InstallationLog
 
         public byte[] GetXMLModList()
         {
-          throw new NotImplementedException();
+            return null;
         }
 
         public byte[] GetXMLIniList()
         {
-          throw new NotImplementedException();
+            return null;
+        }
+
+        public IInstallLog ReInitialize(string p_strLogPath)
+        {
+            return this; // ???
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Nexus.Client.Settings;
+﻿using System;
+using Nexus.Client.Settings;
 
 namespace Nexus.Client.CLI.Properties
 {
@@ -11,6 +12,32 @@ namespace Nexus.Client.CLI.Properties
     /// </remarks>
     internal sealed partial class Settings : ISettings
     {
+        public DateTime LastCheckedMissingDownloadID
+        {
+            get
+            {
+                return DateTime.Now; // idfk, doesn't seem used as of 11/15/2016 - N3X
+            }
+
+            set
+            {
+                //nop
+            }
+        }
+
+        public int MaxConcurrentDownloads
+        {
+            get
+            {
+                return 1; // idfk, value set for toasters - N3X
+            }
+
+            set
+            {
+                // nop
+            }
+        }
+
         /// <summary>
         /// Gets the full name of the mod manager.
         /// </summary>
@@ -20,6 +47,19 @@ namespace Nexus.Client.CLI.Properties
             get
             {
                 return "NMM CLI";
+            }
+        }
+
+        public bool SkyrimSEFirstInstallWarning
+        {
+            get
+            {
+                return true; // Avoid any popups.  Yeees, we totally showed that popup! - N3X
+            }
+
+            set
+            {
+                // nop
             }
         }
     }

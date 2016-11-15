@@ -33,7 +33,7 @@ namespace Nexus.Client.PluginManagement
         public DummyPluginManager(string pluginsFile, IGameMode gameMode, IMod mod)
         {
             StreamReader reader = new StreamReader(pluginsFile);
-            
+
             string installationPath = Path.Combine(gameMode.GameModeEnvironmentInfo.InstallationPath, gameMode.GetModFormatAdjustedPath(mod.Format, null, false));
 
             string line;
@@ -59,12 +59,12 @@ namespace Nexus.Client.PluginManagement
         #region Properties
 
         public ReadOnlyObservableList<Plugin> ManagedPlugins
-		{
-			get
-			{
+        {
+            get
+            {
                 return m_ROOLPlugins;
-			}
-		}
+            }
+        }
 
         public ReadOnlyObservableList<Plugin> ActivePlugins
         {
@@ -185,26 +185,33 @@ namespace Nexus.Client.PluginManagement
         {
             return false;
         }
-        
+
         public bool CanActivatePlugins()
         {
-        	return true;
+            return true;
         }
-    	
-		public int MaxAllowedActivePluginsCount {
-			get {
-				return 255;
-			}
-		}
 
-    public List<Plugin> GetOrphanedPlugins(string p_strMasterName)
-    {
-      throw new NotImplementedException();
-    }
+        public int MaxAllowedActivePluginsCount
+        {
+            get
+            {
+                return 255;
+            }
+        }
 
-    public string GetPluginDescription(string p_strPlugin)
-    {
-      throw new NotImplementedException();
-    }
+        public List<Plugin> GetOrphanedPlugins(string p_strMasterName)
+        {
+            return null;
+        }
+
+        public string GetPluginDescription(string p_strPlugin)
+        {
+            return null;
+        }
+
+        public IBackgroundTask ApplyLoadOrder(Dictionary<Plugin, string> p_kvpRegisteredPlugins, bool p_booSortingOnly)
+        {
+            return null;
+        }
     }
 }

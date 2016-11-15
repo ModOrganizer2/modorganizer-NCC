@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{67229E11-4C18-4863-8B1E-45145BC858FB}</ProjectGuid>
+    <ProjectGuid>{08AA7C55-01D6-4C22-AC2D-E04DBCF35890}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nexus.Client.CLI</RootNamespace>
