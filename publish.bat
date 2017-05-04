@@ -50,8 +50,8 @@ copy "%_NMMPATH%\bin\Release\data\7z-64bit.dll" "%outputPath%\NCC\data"
 
 rem copy the CLI binaries
 
-copy "%_NMMCLIPATH%bin\Release\NexusClientCLI.exe" "%outputPath%\NCC"
-copy "%_NMMCLIPATH%bin\Release\NexusClientCLI.exe.config" "%outputPath%\NCC"
+copy "%_NMMPATH%\bin\Release\NexusClientCLI.exe" "%outputPath%\NCC"
+copy "%_NMMPATH%\bin\Release\NexusClientCLI.exe.config" "%outputPath%\NCC"
 
 goto end
 
