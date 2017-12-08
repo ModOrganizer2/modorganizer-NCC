@@ -43,8 +43,12 @@ Copy-Item "$NMMPATH\bin\Release\GameModes\Skyrim.*" "$outputPath\NCC\GameModes"
 Copy-Item "$NMMPATH\bin\Release\GameModes\Oblivion.*" "$outputPath\NCC\GameModes"
 Copy-Item "$NMMPATH\bin\Release\GameModes\GamebryoBase.dll" "$outputPath\NCC\GameModes"
 
+# we should reimplement the dummy classes eventually
 New-Item -ItemType directory -Force -Path  "$outputPath\NCC\GameModes\data"
-# Copy-Item "$NMMPATH\..\bin\Release\BossDummy.dll" "$outputPath\NCC\GameModes\data\boss32.dll"
+Copy-Item "$NMMPATH\..\bin\Release\GameModes\boss32.dll" "$outputPath\NCC\GameModes\data"
+Copy-Item "$NMMPATH\..\bin\Release\GameModes\boss64.dll" "$outputPath\NCC\GameModes\data"
+Copy-Item "$NMMPATH\..\bin\Release\GameModes\loot32.dll" "$outputPath\NCC\GameModes\data"
+Copy-Item "$NMMPATH\..\bin\Release\GameModes\loot64.dll" "$outputPath\NCC\GameModes\data"
 
 New-Item -ItemType directory -Force -Path  "$outputPath\NCC\ModFormats"
 Copy-Item "$NMMPATH\bin\Release\ModFormats\FOMod.dll" "$outputPath\NCC\ModFormats"
