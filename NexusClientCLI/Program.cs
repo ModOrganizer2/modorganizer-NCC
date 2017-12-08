@@ -220,8 +220,6 @@ namespace Nexus.Client.CLI
                     InstallerGroup installers = new InstallerGroup(dataFileUtility, fileInstaller, iniIniInstaller, gameSpecificValueInstaller, pluginManager);
                     IVirtualModActivator modActivator = new DummyVirtualModActivator(gameMode, environmentInfo);
                     IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameMode, environmentInfo, modActivator, installers, SynchronizationContext.Current);
-                    // read-only transactions are waaaay faster, especially for solid archives) because the extractor isn't recreated for every extraction (why exactly would it be otherwise?)
-                    mod.BeginReadOnlyTransaction(fileUtil);
                     // run the script in a second thread and start the main loop in the main thread to ensure we can handle message boxes and the like
                     ScriptRunner runner = new ScriptRunner(executor, mod.InstallScript);
 
