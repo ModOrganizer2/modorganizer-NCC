@@ -31,8 +31,12 @@ copy "%_NMMPATH%\bin\Release\GameModes\SkyrimSE.*" "%outputPath%\NCC\GameModes"
 copy "%_NMMPATH%\bin\Release\GameModes\Oblivion.*" "%outputPath%\NCC\GameModes"
 copy "%_NMMPATH%\bin\Release\GameModes\GamebryoBase.dll" "%outputPath%\NCC\GameModes"
 
+rem we should reimplement the dummy classes eventually
 mkdir  "%outputPath%\NCC\GameModes\data"
-rem copy %_NMMPATH%\..\bin\Release\BossDummy.dll" "%outputPath%\NCC\GameModes\data\boss32.dll"
+copy "%_NMMPATH%\..\bin\Release\GameModes\boss32.dll" "%outputPath%\NCC\GameModes\data"
+copy "%_NMMPATH%\..\bin\Release\GameModes\boss64.dll" "%outputPath%\NCC\GameModes\data"
+copy "%_NMMPATH%\..\bin\Release\GameModes\loot32.dll" "%outputPath%\NCC\GameModes\data"
+copy "%_NMMPATH%\..\bin\Release\GameModes\loot64.dll" "%outputPath%\NCC\GameModes\data"
 
 mkdir "%outputPath%\NCC\ModFormats"
 copy "%_NMMPATH%\bin\Release\ModFormats\FOMod.dll" "%outputPath%\NCC\ModFormats"
