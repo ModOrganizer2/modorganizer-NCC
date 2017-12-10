@@ -33,10 +33,10 @@ copy "%_NMMPATH%\bin\Release\GameModes\GamebryoBase.dll" "%outputPath%\NCC\GameM
 
 rem we should reimplement the dummy classes eventually
 mkdir  "%outputPath%\NCC\GameModes\data"
-copy "%_NMMPATH%\..\bin\Release\GameModes\boss32.dll" "%outputPath%\NCC\GameModes\data"
-copy "%_NMMPATH%\..\bin\Release\GameModes\boss64.dll" "%outputPath%\NCC\GameModes\data"
-copy "%_NMMPATH%\..\bin\Release\GameModes\loot32.dll" "%outputPath%\NCC\GameModes\data"
-copy "%_NMMPATH%\..\bin\Release\GameModes\loot64.dll" "%outputPath%\NCC\GameModes\data"
+copy "%_NMMPATH%\bin\Release\GameModes\boss32.dll" "%outputPath%\NCC\GameModes\data"
+copy "%_NMMPATH%\bin\Release\GameModes\boss64.dll" "%outputPath%\NCC\GameModes\data"
+copy "%_NMMPATH%\bin\Release\GameModes\loot32.dll" "%outputPath%\NCC\GameModes\data"
+copy "%_NMMPATH%\bin\Release\GameModes\loot64.dll" "%outputPath%\NCC\GameModes\data"
 
 mkdir "%outputPath%\NCC\ModFormats"
 copy "%_NMMPATH%\bin\Release\ModFormats\FOMod.dll" "%outputPath%\NCC\ModFormats"
