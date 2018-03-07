@@ -1,6 +1,6 @@
-set _NMMPATH=%~dp0..\nmm
+set _NMMPATH=%~dp0..\Nexus-Mod-Manager
 set _NMMCLIPATH=%~dp0
-set outputPath=..\..\..\install\bin
+set outputPath=..\..\install\bin
 
 mkdir  "%outputPath%\NCC"
 copy "%_NMMPATH%\bin\Release\ChinhDo.Transactions.dll" "%outputPath%\NCC"
