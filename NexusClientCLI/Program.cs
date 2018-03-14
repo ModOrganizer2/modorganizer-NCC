@@ -200,6 +200,8 @@ namespace Nexus.Client.CLI
 
                 if (mod.HasInstallScript)
                 {
+                    SevenZipExtractor extractor = new SevenZipExtractor(fileNameTemporary);
+                    extractor.ExtractArchive(Path.Combine(environmentInfo.TemporaryPath, Path.GetFileNameWithoutExtension(filename)));
                     DummyDataFileUtilFactory dummyFactory = null;
                     IDataFileUtil dataFileUtility;
                     Logger.Info("Detected C# script that relies on files in the actual data folder");
@@ -213,10 +215,10 @@ namespace Nexus.Client.CLI
 
                     TxFileManager fileManager = new TxFileManager();
                     IInstallLog installLog = new DummyInstallLog();
-                    IIniInstaller iniIniInstaller = new IniInstaller(mod, installLog, fileManager, delegate { return OverwriteResult.No; });
+                    IIniInstaller iniIniInstaller = new Nexus.Client.ModManagement.IniInstaller(mod, installLog, fileManager, delegate { return OverwriteResult.No; });
                     IPluginManager pluginManager = new DummyPluginManager(Path.Combine(profilePath, "plugins.txt"), gameMode, mod);
                     IGameSpecificValueInstaller gameSpecificValueInstaller = gameMode.GetGameSpecificValueInstaller(mod, installLog, fileManager, new NexusFileUtil(environmentInfo), delegate { return OverwriteResult.No; });
-                    IModFileInstaller fileInstaller = new ModFileInstaller(gameMode.GameModeEnvironmentInfo, mod, installLog, pluginManager, dataFileUtility, fileManager, delegate { return OverwriteResult.No; }, false);
+                    IModFileInstaller fileInstaller = new Nexus.Client.ModManagement.ModFileInstaller(gameMode.GameModeEnvironmentInfo, mod, installLog, pluginManager, dataFileUtility, fileManager, delegate { return OverwriteResult.No; }, false);
                     InstallerGroup installers = new InstallerGroup(dataFileUtility, fileInstaller, iniIniInstaller, gameSpecificValueInstaller, pluginManager);
                     IVirtualModActivator modActivator = new DummyVirtualModActivator(gameMode, environmentInfo);
                     IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameMode, environmentInfo, modActivator, installers, SynchronizationContext.Current);
@@ -254,9 +256,9 @@ namespace Nexus.Client.CLI
                 MessageBox.Show(e.Message, "Installation failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 5;
             }
-        }
+    }
 
-        [STAThread]
+    [STAThread]
         static int Main(string[] args)
         {
             string game = null;
