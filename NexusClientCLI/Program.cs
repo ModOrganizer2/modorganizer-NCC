@@ -13,7 +13,6 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
@@ -28,8 +27,6 @@ using Nexus.Client.ModManagement;
 using Nexus.Client.ModManagement.InstallationLog;
 using Nexus.Client.PluginManagement;
 using Nexus.Client.Settings;
-using Nexus.Client.BackgroundTasks;
-using Castle;
 using Castle.DynamicProxy;
 
 
@@ -200,8 +197,9 @@ namespace Nexus.Client.CLI
 
                 if (mod.HasInstallScript)
                 {
-                    SevenZipExtractor extractor = new SevenZipExtractor(fileNameTemporary);
-                    extractor.ExtractArchive(Path.Combine(environmentInfo.TemporaryPath, Path.GetFileNameWithoutExtension(filename)));
+                    //SevenZipExtractor extractor = new SevenZipExtractor(fileNameTemporary);
+                    string extractPath = Path.Combine(environmentInfo.TemporaryPath, Path.GetFileNameWithoutExtension(filename));
+                    //extractor.ExtractArchive(extractPath);
                     DummyDataFileUtilFactory dummyFactory = null;
                     IDataFileUtil dataFileUtility;
                     Logger.Info("Detected C# script that relies on files in the actual data folder");
@@ -215,10 +213,10 @@ namespace Nexus.Client.CLI
 
                     TxFileManager fileManager = new TxFileManager();
                     IInstallLog installLog = new DummyInstallLog();
-                    IIniInstaller iniIniInstaller = new Nexus.Client.ModManagement.IniInstaller(mod, installLog, fileManager, delegate { return OverwriteResult.No; });
+                    IIniInstaller iniIniInstaller = new IniInstaller(mod, installLog, fileManager, delegate { return OverwriteResult.No; });
                     IPluginManager pluginManager = new DummyPluginManager(Path.Combine(profilePath, "plugins.txt"), gameMode, mod);
                     IGameSpecificValueInstaller gameSpecificValueInstaller = gameMode.GetGameSpecificValueInstaller(mod, installLog, fileManager, new NexusFileUtil(environmentInfo), delegate { return OverwriteResult.No; });
-                    IModFileInstaller fileInstaller = new Nexus.Client.ModManagement.ModFileInstaller(gameMode.GameModeEnvironmentInfo, mod, installLog, pluginManager, dataFileUtility, fileManager, delegate { return OverwriteResult.No; }, false);
+                    IModFileInstaller fileInstaller = new ModFileInstaller(gameMode.GameModeEnvironmentInfo, mod, installLog, pluginManager, dataFileUtility, fileManager, delegate { return OverwriteResult.No; }, false, extractPath, gameMode.StopFolders);
                     InstallerGroup installers = new InstallerGroup(dataFileUtility, fileInstaller, iniIniInstaller, gameSpecificValueInstaller, pluginManager);
                     IVirtualModActivator modActivator = new DummyVirtualModActivator(gameMode, environmentInfo);
                     IScriptExecutor executor = mod.InstallScript.Type.CreateExecutor(mod, gameMode, environmentInfo, modActivator, installers, SynchronizationContext.Current);
@@ -228,9 +226,9 @@ namespace Nexus.Client.CLI
                     runner.Execute();
                     runner.TaskEnded += delegate
                     {
+                        fileInstaller.FinalizeInstall();
                         iniIniInstaller.FinalizeInstall();
                         gameSpecificValueInstaller.FinalizeInstall();
-                        mod.EndReadOnlyTransaction();
 
                         Application.Exit();
                     };

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.IO;
 using System.Linq;
 using Nexus.Client.ModManagement.Scripting;
@@ -10,6 +9,7 @@ using Nexus.Client.PluginManagement;
 using Nexus.Client.Util;
 using Nexus.Client.Games;
 using ChinhDo.Transactions;
+using SevenZip;
 //using Extensions;
 using System.Text.RegularExpressions;
 
@@ -70,6 +70,18 @@ namespace Nexus.Client.ModManagement
         /// <value>true or false.</value>
         protected bool IsPlugin { get; private set; }
 
+        protected string ExtractPath { get; private set; }
+
+        protected string Prefix { get; private set; }
+
+        protected Dictionary<string, ArchiveFileInfo> TargetFiles { get; private set; }
+
+        protected List<string> IgnoreFolders = new List<string> { "__MACOSX" };
+        protected IList<string> StopFolders { get; private set; }
+        private Dictionary<string, string> m_dicMovedArchiveFiles = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private List<string> m_strFiles = null;
+        private Dictionary<string, ArchiveFileInfo> m_dicFileInfo = null;
+
         #endregion
 
         #region Constructors
@@ -85,7 +97,7 @@ namespace Nexus.Client.ModManagement
         /// <param name="p_tfmFileManager">The transactional file manager to use to interact with the file system.</param>
         /// <param name="p_dlgOverwriteConfirmationDelegate">The method to call in order to confirm an overwrite.</param>
         /// <param name="p_UsesPlugins">Whether the file is a mod or a plugin.</param>
-        public ModFileInstaller(IGameModeEnvironmentInfo p_gmiGameModeInfo, IMod p_modMod, IInstallLog p_ilgInstallLog, IPluginManager p_pmgPluginManager, IDataFileUtil p_dfuDataFileUtility, TxFileManager p_tfmFileManager, ConfirmItemOverwriteDelegate p_dlgOverwriteConfirmationDelegate, bool p_UsesPlugins)
+        public ModFileInstaller(IGameModeEnvironmentInfo p_gmiGameModeInfo, IMod p_modMod, IInstallLog p_ilgInstallLog, IPluginManager p_pmgPluginManager, IDataFileUtil p_dfuDataFileUtility, TxFileManager p_tfmFileManager, ConfirmItemOverwriteDelegate p_dlgOverwriteConfirmationDelegate, bool p_UsesPlugins, string p_extractPath, IEnumerable<string> p_stopFolders)
         {
             GameModeInfo = p_gmiGameModeInfo;
             Mod = p_modMod;
@@ -93,8 +105,18 @@ namespace Nexus.Client.ModManagement
             PluginManager = p_pmgPluginManager;
             DataFileUtility = p_dfuDataFileUtility;
             TransactionalFileManager = p_tfmFileManager;
+            TargetFiles = new Dictionary<string, ArchiveFileInfo>();
             m_dlgOverwriteConfirmationDelegate = p_dlgOverwriteConfirmationDelegate ?? ((s, b, m) => OverwriteResult.No);
             IsPlugin = p_UsesPlugins;
+            ExtractPath = p_extractPath;
+            StopFolders = new List<string>(p_stopFolders);
+            if (!StopFolders.Contains("fomod", StringComparer.OrdinalIgnoreCase))
+              StopFolders.Add("fomod");
+            Archive archive = new Archive(Mod.ModArchivePath);
+            Prefix = FindPathPrefix(archive);
+            m_dicFileInfo = new Dictionary<string, ArchiveFileInfo>(StringComparer.OrdinalIgnoreCase);
+            m_strFiles = new List<string>();
+            LoadFileIndices();
         }
 
         #endregion
@@ -197,94 +219,139 @@ namespace Nexus.Client.ModManagement
         /// not to overwrite an existing file.</returns>
         public bool InstallFileFromMod(string p_strModFilePath, string p_strInstallPath)
         {
-			try
-			{
-				byte[] bteModFile = Mod.GetFile(p_strModFilePath);
-				return GenerateDataFile(p_strInstallPath, bteModFile);
-			}
-			catch (FileNotFoundException)
-			{
-				return false;
-			}
+            try
+            {
+                string filePath = GetRealPath(p_strModFilePath);
+                string extractPath = Path.Combine(ExtractPath, filePath);
+                Directory.CreateDirectory(Path.GetDirectoryName(extractPath));
+                string strPath = filePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
 
-/*
+                ArchiveFileInfo afiFile = m_dicFileInfo[strPath];
+                TargetFiles[p_strInstallPath] = afiFile;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
-            string[] components = p_strInstallPath.Split(Path.DirectorySeparatorChar);
-            p_strInstallPath = string.Join("" + Path.DirectorySeparatorChar, components.Skip(1).Take(components.Length - 1).ToArray());
-            string destinationPath = installPath(p_strInstallPath);
-
-            if (!Directory.Exists(Path.GetDirectoryName(destinationPath)))
-                CreateDirectory(Path.GetDirectoryName(destinationPath));
+        protected string GetRealPath(string p_strPath)
+        {
+            string strPath = p_strPath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+            strPath = strPath.Trim(Path.DirectorySeparatorChar);
+            string strAdjustedPath = null;
+            if (m_dicMovedArchiveFiles.TryGetValue(strPath, out strAdjustedPath))
+                return strAdjustedPath;
+            if (String.IsNullOrEmpty(Prefix))
+                return p_strPath;
+            if (strPath.ToLowerInvariant().IndexOf(Prefix.ToLowerInvariant()) == 0)
+                return p_strPath;
             else
+                return Path.Combine(Prefix, p_strPath);
+        }
+
+        /// <summary>
+        /// This finds where in the archive the FOMod file structure begins.
+        /// </summary>
+        /// <remarks>
+        /// This methods finds the path prefix to the folder containing the core files and folders of the FOMod. If
+        /// there are any files that are above the core folder, than they are given new file names inside the
+        /// core folder.
+        /// </remarks>
+        protected string FindPathPrefix(Archive m_arcFile)
+        {
+            string strPrefixPath = null;
+            Stack<string> stkPaths = new Stack<string>();
+            stkPaths.Push("/");
+
+            while (stkPaths.Count > 0)
             {
-                if (!TestDoOverwrite(p_strInstallPath))
-                    return false;
-
-                if (File.Exists(destinationPath))
+                string strSourcePath = stkPaths.Pop();
+                string[] directories = m_arcFile.GetDirectories(strSourcePath);
+                bool booFoundPrefix = false;
+                foreach (string strDirectory in directories)
                 {
-                    FileInfo Info = new FileInfo(destinationPath);
-                    if (Info.IsReadOnly == true)
-                        File.SetAttributes(destinationPath, File.GetAttributes(destinationPath) & ~FileAttributes.ReadOnly);
-                    string strInstallDirectory = Path.GetDirectoryName(p_strInstallPath);
-                    string strBackupDirectory = Path.Combine(GameModeInfo.OverwriteDirectory, strInstallDirectory);
-                    string strOldModKey = InstallLog.GetCurrentFileOwnerKey(p_strInstallPath);
-                    if (strOldModKey == null)
-                    {
-                        InstallLog.LogOriginalDataFile(p_strInstallPath);
-                        strOldModKey = InstallLog.OriginalValuesKey;
-                    }
-                    string strInstallingModKey = InstallLog.GetModKey(Mod);
-                    //if this mod has installed this file already we just replace it and don't
-                    // need to back it up.
-                    if (!strOldModKey.Equals(strInstallingModKey))
-                    {
-                        //back up the current version of the file if the current mod
-                        // didn't install it
-                        if (!Directory.Exists(strBackupDirectory))
-                            CreateDirectory(strBackupDirectory);
+                    bool booSkipFolder = false;
 
-                        //we get the file name this way in order to preserve the file name's case
-                        string strFile = Path.GetFileName(Directory.GetFiles(Path.GetDirectoryName(destinationPath), Path.GetFileName(destinationPath))[0]);
-                        strFile = strOldModKey + "_" + strFile;
+                    foreach (string Folder in IgnoreFolders)
+                        if (strDirectory.IndexOf(Folder, StringComparison.InvariantCultureIgnoreCase) >= 0)
+                        {
+                            booSkipFolder = true;
+                            break;
+                        }
 
-                        string strBackupFilePath = Path.Combine(strBackupDirectory, strFile);
-                        Info = new FileInfo(strBackupFilePath);
-                        if ((Info.IsReadOnly == true) && (File.Exists(strBackupFilePath)))
-                            File.SetAttributes(strBackupFilePath, File.GetAttributes(strBackupFilePath) & ~FileAttributes.ReadOnly);
-                        TransactionalFileManager.Copy(destinationPath, strBackupFilePath, true);
+                    if (booSkipFolder)
+                        continue;
+
+                    stkPaths.Push(strDirectory);
+                    if (StopFolders.Contains(Path.GetFileName(strDirectory).ToLowerInvariant()))
+                    {
+                        booFoundPrefix = true;
+                        break;
                     }
-                    TransactionalFileManager.Delete(destinationPath);
+                }
+                if (booFoundPrefix)
+                {
+                    strPrefixPath = strSourcePath;
+                    break;
                 }
             }
 
-            try {
-                using (FileStream stream = File.Create(destinationPath))
+            strPrefixPath = (strPrefixPath == null) ? "" : strPrefixPath.Trim(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+            if (!String.IsNullOrEmpty(strPrefixPath))
+                strPrefixPath = InitializeMovedArchive(strPrefixPath, m_arcFile);
+            
+            return strPrefixPath;
+        }
+
+        private string InitializeMovedArchive(string p_strPathPrefix, Archive m_arcFile)
+        {
+            p_strPathPrefix = p_strPathPrefix.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+            p_strPathPrefix = p_strPathPrefix.Trim(Path.DirectorySeparatorChar);
+            p_strPathPrefix += Path.DirectorySeparatorChar;
+            m_dicMovedArchiveFiles.Clear();
+            string[] strFiles = m_arcFile.GetFiles("/", true);
+            Int32 intTrimLength = p_strPathPrefix.Length;
+            for (Int32 i = strFiles.Length - 1; i >= 0; i--)
+            {
+                strFiles[i] = strFiles[i].Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+                string strFile = strFiles[i];
+                string strNewFileName = null;
+                if (!strFile.StartsWith(p_strPathPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    Mod.ExtractFileTo(p_strModFilePath, stream);
+                    strNewFileName = strFile;
+                    string strDirectory = Path.GetDirectoryName(strNewFileName);
+                    string strFileName = Path.GetFileNameWithoutExtension(strFile);
+                    string strExtension = Path.GetExtension(strFile);
+                    for (Int32 j = 1; m_dicMovedArchiveFiles.ContainsKey(strNewFileName); j++)
+                        strNewFileName = Path.Combine(strDirectory, strFileName + " " + j + strExtension);
                 }
-            }
-            catch (FileNotFoundException e)
-            {
-              MessageBox.Show("File " + p_strModFilePath + " couldn't be extracted.\n" +
-                                "This probably means the mod is broken though you may still get partial functionality.\n" +
-                                "Please inform the mod author.\n" +
-                                "Detailed Error: " + e.Message, "File not found in FOMod", MessageBoxButtons.OK, MessageBoxIcon.Error);
-          File.Delete(destinationPath);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Exception: " + ex.ToString());
-                throw;
+                else
+                    strNewFileName = strFile.Remove(0, intTrimLength);
+                m_dicMovedArchiveFiles[strNewFileName] = strFile;
             }
 
-            // Checks whether the file is a gamebryo plugin
-            if (IsPlugin)
-                if (PluginManager.IsActivatiblePluginFile(destinationPath))
-                    PluginManager.AddPlugin(destinationPath);
-            InstallLog.AddDataFile(Mod, p_strInstallPath);
-            return IsPlugin;
- */
+            return p_strPathPrefix;
+        }
+
+        /// <summary>
+        /// Caches information about the files in the archive.
+        /// </summary>
+        protected void LoadFileIndices()
+        {
+            SevenZipExtractor extractor = new SevenZipExtractor(Mod.ModArchivePath);
+            m_dicFileInfo.Clear();
+            m_strFiles.Clear();
+
+            foreach (ArchiveFileInfo afiFile in extractor.ArchiveFileData)
+                if (!afiFile.IsDirectory)
+                {
+                    m_dicFileInfo[afiFile.FileName.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)] = afiFile;
+                    m_strFiles.Add(afiFile.FileName.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar));
+                }
+
+            extractor.Dispose();
         }
 
         private string installPath(string installPath)
@@ -435,6 +502,22 @@ namespace Nexus.Client.ModManagement
         /// </summary>
         public virtual void FinalizeInstall()
         {
+            SevenZipExtractor extractor = new SevenZipExtractor(Mod.ModArchivePath);
+            List<int> indexes = new List<int>();
+            foreach (var entry in TargetFiles) {
+                indexes.Add(entry.Value.Index);
+            }
+            indexes.Sort();
+            extractor.ExtractFiles(ExtractPath, indexes.ToArray());
+            extractor.Dispose();
+            foreach (var entry in TargetFiles)
+            {
+                if (File.Exists(Path.Combine(ExtractPath, entry.Value.FileName)))
+                {
+                    byte[] bteModFile = File.ReadAllBytes(Path.Combine(ExtractPath, entry.Value.FileName));
+                    GenerateDataFile(entry.Key, bteModFile);
+                }
+            }
         }
         
         public List<string> InstallErrors {
