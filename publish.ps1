@@ -45,10 +45,10 @@ Copy-Item "$NMMPATH\bin\Release\GameModes\GamebryoBase.dll" "$outputPath\NCC\Gam
 
 # we should reimplement the dummy classes eventually
 New-Item -ItemType directory -Force -Path  "$outputPath\NCC\GameModes\data"
-Copy-Item "$NMMPATH\bin\Release\GameModes\boss32.dll" "$outputPath\NCC\GameModes\data"
-Copy-Item "$NMMPATH\bin\Release\GameModes\boss64.dll" "$outputPath\NCC\GameModes\data"
-Copy-Item "$NMMPATH\bin\Release\GameModes\loot32.dll" "$outputPath\NCC\GameModes\data"
-Copy-Item "$NMMPATH\bin\Release\GameModes\loot64.dll" "$outputPath\NCC\GameModes\data"
+Copy-Item "$NMMPATH\bin\Release\GameModes\data\boss32.dll" "$outputPath\NCC\GameModes\data"
+Copy-Item "$NMMPATH\bin\Release\GameModes\data\boss64.dll" "$outputPath\NCC\GameModes\data"
+Copy-Item "$NMMPATH\bin\Release\GameModes\data\loot32.dll" "$outputPath\NCC\GameModes\data"
+Copy-Item "$NMMPATH\bin\Release\GameModes\data\loot64.dll" "$outputPath\NCC\GameModes\data"
 
 New-Item -ItemType directory -Force -Path  "$outputPath\NCC\ModFormats"
 Copy-Item "$NMMPATH\bin\Release\ModFormats\FOMod.dll" "$outputPath\NCC\ModFormats"
