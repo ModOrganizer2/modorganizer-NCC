@@ -113,9 +113,9 @@ namespace Nexus.Client
 		public EnvironmentInfo(ISettings p_setSettings)
 		{
 			Settings = p_setSettings;
-			m_strPersonalDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			if (String.IsNullOrEmpty(m_strPersonalDataFolderPath))
-				m_strPersonalDataFolderPath = Registry.GetValue(@"HKEY_CURRENT_USER\software\microsoft\windows\currentversion\explorer\user shell folders", "Personal", null).ToString();
+      PersonalDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+			if (String.IsNullOrEmpty(PersonalDataFolderPath))
+        PersonalDataFolderPath = Registry.GetValue(@"HKEY_CURRENT_USER\software\microsoft\windows\currentversion\explorer\user shell folders", "Personal", null).ToString();
 
       if (String.IsNullOrEmpty(Settings.TempPathFolder))
       {
