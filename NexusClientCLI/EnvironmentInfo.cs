@@ -12,8 +12,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 using System;
 using System.IO;
+using System.Windows.Forms;
 using Microsoft.Win32;
 using Nexus.Client.Settings;
+using Nexus.Client.Util;
 
 namespace Nexus.Client
 {
@@ -24,77 +26,57 @@ namespace Nexus.Client
 	{
 		private string m_strApplicationPersonalDataFolderPath = null;
 		private string m_strPersonalDataFolderPath = null;
+    private string m_strTempPath = null;
 
-		#region Properties
+    #region Properties
 
-		/// <summary>
-		/// Gets the path to the user's personal data folder.
-		/// </summary>
-		/// <value>The path to the user's personal data folder.</value>
-		public string PersonalDataFolderPath
-		{
-			get
-			{
-				return m_strPersonalDataFolderPath;
-			}
-		}
+    /// <summary>
+    /// Gets the path to the user's personal data folder.
+    /// </summary>
+    /// <value>The path to the user's personal data folder.</value>
+    public string PersonalDataFolderPath { get; } = null;
 
-		/// <summary>
-		/// Gets the path to the mod manager's folder in the user's personal data folder.
-		/// </summary>
-		/// <value>The path to the mod manager's folder in the user's personal data folder.</value>
-		public string ApplicationPersonalDataFolderPath
-		{
-			get
-			{
-				return m_strApplicationPersonalDataFolderPath;
-			}
-		}
+    /// <summary>
+    /// Gets the path to the mod manager's folder in the user's personal data folder.
+    /// </summary>
+    /// <value>The path to the mod manager's folder in the user's personal data folder.</value>
+    public string ApplicationPersonalDataFolderPath { get; } = null;
 
-		/// <summary>
-		/// Gets whether the programme is running under the Mono framework.
-		/// </summary>
-		/// <value>Whether the programme is running under the Mono framework.</value>
-		public bool IsMonoMode
+    /// <summary>
+    /// Gets whether the programme is running under the Mono framework.
+    /// </summary>
+    /// <value>Whether the programme is running under the Mono framework.</value>
+    public bool IsMonoMode
 		{
 			get
 			{
 				return Type.GetType("Mono.Runtime") != null;
 			}
-		}
+    }
 
-		/// <summary>
-		/// Gets the temporary path used by the application.
-		/// </summary>
-		/// <value>The temporary path used by the application.</value>
-		public string TemporaryPath
-		{
-			get
-			{
-				string strPath = Path.Combine(Path.GetTempPath(),System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
-				if (!Directory.Exists(strPath))
-					Directory.CreateDirectory(strPath);
-				return strPath;
-			}
-		}
+    /// <summary>
+    /// Gets the temporary path used by the application.
+    /// </summary>
+    /// <value>The temporary path used by the application.</value>
+    public string TemporaryPath { get; } = null;
 
-		/// <summary>
-		/// Gets the path to the directory where programme data is stored.
-		/// </summary>
-		/// <value>The path to the directory where programme data is stored.</value>
-		public string ProgrammeInfoDirectory
-		{
-			get
-			{
-                return Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "data");
-			}
-		}
+    /// <summary>
+    /// Gets the path to the directory where programme data is stored.
+    /// </summary>
+    /// <value>The path to the directory where programme data is stored.</value>
+    public string ProgrammeInfoDirectory
+    {
+      get
+      {
+        return Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "data");
+      }
+    }
 
-		/// <summary>
-		/// Gets whether the current process is 64bit.
-		/// </summary>
-		/// <value>Whether the current process is 64bit.</value>
-		public bool Is64BitProcess
+    /// <summary>
+    /// Gets whether the current process is 64bit.
+    /// </summary>
+    /// <value>Whether the current process is 64bit.</value>
+    public bool Is64BitProcess
 		{
 			get
 			{
@@ -116,7 +98,7 @@ namespace Nexus.Client
 		{
 			get
 			{
-				return new Version(ProgrammeMetadata.VersionString);
+				return new Version(CommonData.VersionString);
 			}
 		}
 
@@ -135,8 +117,17 @@ namespace Nexus.Client
 			if (String.IsNullOrEmpty(m_strPersonalDataFolderPath))
 				m_strPersonalDataFolderPath = Registry.GetValue(@"HKEY_CURRENT_USER\software\microsoft\windows\currentversion\explorer\user shell folders", "Personal", null).ToString();
 
-			m_strApplicationPersonalDataFolderPath = Path.Combine(m_strPersonalDataFolderPath, p_setSettings.ModManagerName);
-		}
+      if (String.IsNullOrEmpty(Settings.TempPathFolder))
+      {
+        TemporaryPath = Path.Combine(Path.GetTempPath(), Application.ProductName);
+        if (!Directory.Exists(TemporaryPath))
+          Directory.CreateDirectory(TemporaryPath);
+      }
+      else
+        TemporaryPath = Settings.TempPathFolder;
+
+      ApplicationPersonalDataFolderPath = Path.Combine(PersonalDataFolderPath, p_setSettings.ModManagerName);
+    }
 
 		#endregion
 	}

@@ -1,2 +1,5 @@
 /nmm
 /NexusClientCLI/obj
+/.vs
+/.idea
+/*.log

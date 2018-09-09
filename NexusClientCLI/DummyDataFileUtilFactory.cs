@@ -22,7 +22,6 @@ namespace Nexus.Client.CLI
     {
         private string m_installationPath;
         private string m_gamePath;
-        private int m_copiedFiles = 0;
         private List<string> m_searchPaths = new List<string>();
 
         /// <summary>

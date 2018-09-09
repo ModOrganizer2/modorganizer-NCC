@@ -216,7 +216,7 @@
       <Project>{1732BB96-1F74-4B99-82D6-4D1239C9D36A}</Project>
       <Name>Commanding</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Nexus-Mod-Manager\FOMod\FOMod.csproj">
+    <ProjectReference Include="..\..\Nexus-Mod-Manager\Mod Formats\FOMod\FOMod.csproj">
       <Project>{34B04F6B-0D64-455F-B20F-1C3E080AE601}</Project>
       <Name>FOMod</Name>
     </ProjectReference>
