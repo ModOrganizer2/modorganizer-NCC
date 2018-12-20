@@ -48,7 +48,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Nexus-Mod-Manager\bin\Debug\</OutputPath>
+    <OutputPath>..\Nexus-Mod-Manager\Stage\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -59,7 +59,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Nexus-Mod-Manager\bin\Release\</OutputPath>
+    <OutputPath>..\Nexus-Mod-Manager\Stage\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -127,7 +127,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
-    <OutputPath>..\..\Nexus-Mod-Manager\bin\Debug\</OutputPath>
+    <OutputPath>..\..\Nexus-Mod-Manager\Stage\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -138,7 +138,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>PdbOnly</DebugType>
     <Optimize>True</Optimize>
-    <OutputPath>..\..\Nexus-Mod-Manager\bin\Release\</OutputPath>
+    <OutputPath>..\..\Nexus-Mod-Manager\Stage\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -208,6 +208,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Nexus-Mod-Manager\AntlrUtil\AntlrUtil.csproj">
+      <Project>{8B2AD10B-4E22-4559-A784-648179225ADC}</Project>
+      <Name>AntlrUtil</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Nexus-Mod-Manager\ChinhDo.Transactions.FileManager\ChinhDo.Transactions.FileManager.csproj">
       <Project>{E824ACBB-90C8-4C60-9D52-9C8020E98E3E}</Project>
       <Name>ChinhDo.Transactions.FileManager</Name>
@@ -216,7 +220,7 @@
       <Project>{1732BB96-1F74-4B99-82D6-4D1239C9D36A}</Project>
       <Name>Commanding</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Nexus-Mod-Manager\FOMod\FOMod.csproj">
+    <ProjectReference Include="..\..\Nexus-Mod-Manager\Mod Formats\FOMod\FOMod.csproj">
       <Project>{34B04F6B-0D64-455F-B20F-1C3E080AE601}</Project>
       <Name>FOMod</Name>
     </ProjectReference>
@@ -289,7 +293,7 @@
     <Folder Include="ModManagement\Scripting\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
