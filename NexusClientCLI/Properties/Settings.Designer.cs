@@ -12,7 +12,7 @@ namespace Nexus.Client.CLI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -37,6 +37,8 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" />")]
         public global::Nexus.Client.Settings.SettingsList InstalledGames {
             get {
                 return ((global::Nexus.Client.Settings.SettingsList)(this["InstalledGames"]));
@@ -120,7 +122,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AddMissingInfoToMods {
             get {
                 return ((bool)(this["AddMissingInfoToMods"]));
@@ -180,8 +182,8 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n\t\t\t\t<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n\t\t\t\t<KeyedSettingsOfKeyedSettingsO" +
-            "fString />\r\n\t\t\t")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<KeyedSettingsOfKeyedSettingsOfString />" +
+            "")]
         public global::Nexus.Client.Settings.KeyedSettings<Nexus.Client.Settings.KeyedSettings<string>> RepositoryAuthenticationTokens {
             get {
                 return ((global::Nexus.Client.Settings.KeyedSettings<Nexus.Client.Settings.KeyedSettings<string>>)(this["RepositoryAuthenticationTokens"]));
@@ -193,8 +195,8 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n\t\t\t\t<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n\t\t\t\t<PerGameModeSettingsOfKeyedSet" +
-            "tingsOfAddModDescriptor />\r\n\t\t\t")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<PerGameModeSettingsOfKeyedSettingsOfAdd" +
+            "ModDescriptor />")]
         public global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<Nexus.Client.ModManagement.AddModDescriptor>> QueuedModsToAdd {
             get {
                 return ((global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<Nexus.Client.ModManagement.AddModDescriptor>>)(this["QueuedModsToAdd"]));
@@ -206,7 +208,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://skyrim.nexusmods.com/downloads/file.php?id=1334")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.nexusmods.com/content/modmanager/")]
         public string ModManagerUrl {
             get {
                 return ((string)(this["ModManagerUrl"]));
@@ -215,7 +217,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool CheckForUpdatesOnStartup {
             get {
                 return ((bool)(this["CheckForUpdatesOnStartup"]));
@@ -227,19 +229,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int NumberOfConnections {
-            get {
-                return ((int)(this["NumberOfConnections"]));
-            }
-            set {
-                this["NumberOfConnections"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string UserLocation {
             get {
                 return ((string)(this["UserLocation"]));
@@ -251,19 +241,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PremiumOnly {
-            get {
-                return ((bool)(this["PremiumOnly"]));
-            }
-            set {
-                this["PremiumOnly"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int UpdateCheckInterval {
             get {
                 return ((int)(this["UpdateCheckInterval"]));
@@ -275,7 +253,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LastUpdateCheckDate {
             get {
                 return ((string)(this["LastUpdateCheckDate"]));
@@ -287,7 +265,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int ModVersionsCheckInterval {
             get {
                 return ((int)(this["ModVersionsCheckInterval"]));
@@ -299,7 +277,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LastModVersionsCheckDate {
             get {
                 return ((string)(this["LastModVersionsCheckDate"]));
@@ -347,7 +325,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ShowEmptyCategory {
             get {
                 return ((bool)(this["ShowEmptyCategory"]));
@@ -371,7 +349,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool SkipReadmeFiles {
             get {
                 return ((bool)(this["SkipReadmeFiles"]));
@@ -383,7 +361,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ShowSidePanel {
             get {
                 return ((bool)(this["ShowSidePanel"]));
@@ -395,7 +373,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int CategoryViewDefaultSortOrder {
             get {
                 return ((int)(this["CategoryViewDefaultSortOrder"]));
@@ -419,7 +397,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool UseCategoryView {
             get {
                 return ((bool)(this["UseCategoryView"]));
@@ -443,7 +421,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool SupportOfflineMode {
             get {
                 return ((bool)(this["SupportOfflineMode"]));
@@ -455,7 +433,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool UseMultithreadedDownloads {
             get {
                 return ((bool)(this["UseMultithreadedDownloads"]));
@@ -467,7 +445,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ShowStartupMessage {
             get {
                 return ((bool)(this["ShowStartupMessage"]));
@@ -479,7 +457,7 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool CheckForTipsOnStartup {
             get {
                 return ((bool)(this["CheckForTipsOnStartup"]));
@@ -491,25 +469,13 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoPluginSorting {
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int MaxConcurrentDownloads {
             get {
-                return ((bool)(this["AutoPluginSorting"]));
+                return ((int)(this["MaxConcurrentDownloads"]));
             }
             set {
-                this["AutoPluginSorting"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ManageMultiplePluginTask {
-            get {
-                return ((bool)(this["ManageMultiplePluginTask"]));
-            }
-            set {
-                this["ManageMultiplePluginTask"] = value;
+                this["MaxConcurrentDownloads"] = value;
             }
         }
         
@@ -624,19 +590,36 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<KeyedSettingsOfString />")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<KeyedSettingsOfString>
+  <item key=""Beta Wiki"">
+    <string>https://wiki.nexusmods.com/index.php/Category:NMM</string>
+  </item>
+  <item key=""Beta Forums"">
+    <string>https://forums.nexusmods.com/index.php?/forum/439-open-beta-feedback/</string>
+  </item>
+  <item key=""Bug Report How To"">
+    <string>https://forums.nexusmods.com/index.php?/topic/460590-reporting-bugs/</string>
+  </item>
+  <item key=""Report a Bug"">
+    <string>https://github.com/Nexus-Mods/Nexus-Mod-Manager/issues</string>
+  </item>
+</KeyedSettingsOfString>")]
         public global::Nexus.Client.Settings.KeyedSettings<string> HelpLinks {
             get {
                 return ((global::Nexus.Client.Settings.KeyedSettings<string>)(this["HelpLinks"]));
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<PerGameModeSettingsOfString />")]
         public global::Nexus.Client.Settings.PerGameModeSettings<string> ToolFolder {
             get {
                 return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["ToolFolder"]));
+            }
+            set {
+                this["ToolFolder"] = value;
             }
         }
         
@@ -812,127 +795,6 @@ namespace Nexus.Client.CLI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <ArrayOfString xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns" +
-            ":xsd=\"http://www.w3.org/2001/XMLSchema\" />\r\n    ")]
-        public global::Nexus.Client.Settings.SettingsList InstalledGames1 {
-            get {
-                return ((global::Nexus.Client.Settings.SettingsList)(this["InstalledGames1"]));
-            }
-            set {
-                this["InstalledGames1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfKeyedSettingsOfAddModDescriptor />\r\n    ")]
-        public global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<Nexus.Client.ModManagement.AddModDescriptor>> QueuedModsToAdd1 {
-            get {
-                return ((global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<Nexus.Client.ModManagement.AddModDescriptor>>)(this["QueuedModsToAdd1"]));
-            }
-            set {
-                this["QueuedModsToAdd1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <WindowPositions />\r\n    ")]
-        public global::Nexus.Client.Settings.WindowPositions WindowPositions1 {
-            get {
-                return ((global::Nexus.Client.Settings.WindowPositions)(this["WindowPositions1"]));
-            }
-            set {
-                this["WindowPositions1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <ColumnWidths />\r\n    ")]
-        public global::Nexus.Client.Settings.ColumnWidths ColumnWidths1 {
-            get {
-                return ((global::Nexus.Client.Settings.ColumnWidths)(this["ColumnWidths1"]));
-            }
-            set {
-                this["ColumnWidths1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <SplitterSizes />\r\n    ")]
-        public global::Nexus.Client.Settings.SplitterSizes SplitterSizes1 {
-            get {
-                return ((global::Nexus.Client.Settings.SplitterSizes)(this["SplitterSizes1"]));
-            }
-            set {
-                this["SplitterSizes1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfString />\r\n    ")]
-        public global::Nexus.Client.Settings.PerGameModeSettings<string> ToolFolder1 {
-            get {
-                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["ToolFolder1"]));
-            }
-            set {
-                this["ToolFolder1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfKeyedSettingsOfString />\r\n    ")]
-        public global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<string>> SupportedTools1 {
-            get {
-                return ((global::Nexus.Client.Settings.PerGameModeSettings<Nexus.Client.Settings.KeyedSettings<string>>)(this["SupportedTools1"]));
-            }
-            set {
-                this["SupportedTools1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfString />\r\n    ")]
-        public global::Nexus.Client.Settings.PerGameModeSettings<string> VirtualFolder1 {
-            get {
-                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["VirtualFolder1"]));
-            }
-            set {
-                this["VirtualFolder1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfString />\r\n    ")]
-        public global::Nexus.Client.Settings.PerGameModeSettings<string> HDLinkFolder1 {
-            get {
-                return ((global::Nexus.Client.Settings.PerGameModeSettings<string>)(this["HDLinkFolder1"]));
-            }
-            set {
-                this["HDLinkFolder1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n     <PerGameModeSettingsOfBoolean />\r\n    ")]
-        public global::Nexus.Client.Settings.PerGameModeSettings<bool> MultiHDInstall1 {
-            get {
-                return ((global::Nexus.Client.Settings.PerGameModeSettings<bool>)(this["MultiHDInstall1"]));
-            }
-            set {
-                this["MultiHDInstall1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool OverrideLocalModNames {
             get {
@@ -940,6 +802,41 @@ namespace Nexus.Client.CLI.Properties {
             }
             set {
                 this["OverrideLocalModNames"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ApiKey {
+            get {
+                return ((string)(this["ApiKey"]));
+            }
+            set {
+                this["ApiKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime LastCheckedMissingDownloadID {
+            get {
+                return ((global::System.DateTime)(this["LastCheckedMissingDownloadID"]));
+            }
+            set {
+                this["LastCheckedMissingDownloadID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SkyrimSEFirstInstallWarning {
+            get {
+                return ((bool)(this["SkyrimSEFirstInstallWarning"]));
+            }
+            set {
+                this["SkyrimSEFirstInstallWarning"] = value;
             }
         }
     }

@@ -5,6 +5,8 @@
   using System.Threading;
 
   using Client.Settings;
+  using Util;
+
   /// <summary>
   /// This class adds the <see cref="ISettings"/> to the project's <see cref="Properties.Settings"/>
   /// class.
@@ -12,7 +14,7 @@
   /// <remarks>
   /// This file should not contain any memebers or properties.
   /// </remarks>
-  internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase, ISettings
+  internal sealed partial class Settings : ISettings
   {
     private static readonly object SettingsFileLock = new object();
     private const int PauseBetweenAttemptsMilliseconds = 500;
@@ -68,50 +70,6 @@
       get
       {
         return "NMM CLI";
-      }
-    }
-
-    [global::System.Configuration.UserScopedSettingAttribute()]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public global::System.DateTime LastCheckedMissingDownloadID
-    {
-      get
-      {
-        return ((global::System.DateTime)(this["LastCheckedMissingDownloadID"]));
-      }
-      set
-      {
-        this["LastCheckedMissingDownloadID"] = value;
-      }
-    }
-
-    [global::System.Configuration.UserScopedSettingAttribute()]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [global::System.Configuration.DefaultSettingValueAttribute("5")]
-    public int MaxConcurrentDownloads
-    {
-      get
-      {
-        return ((int)(this["MaxConcurrentDownloads"]));
-      }
-      set
-      {
-        this["MaxConcurrentDownloads"] = value;
-      }
-    }
-
-    [global::System.Configuration.UserScopedSettingAttribute()]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [global::System.Configuration.DefaultSettingValueAttribute("False")]
-    public bool SkyrimSEFirstInstallWarning
-    {
-      get
-      {
-        return ((bool)(this["SkyrimSEFirstInstallWarning"]));
-      }
-      set
-      {
-        this["SkyrimSEFirstInstallWarning"] = value;
       }
     }
 

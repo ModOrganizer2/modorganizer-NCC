@@ -24,13 +24,12 @@ rem stored in repository in binary form
 copy "%_NMMPATH%\Stage\Release\Castle.Core.dll" "%outputPath%\NCC"
 
 mkdir  "%outputPath%\NCC\GameModes"
-copy "%_NMMPATH%\Stage\Release\GameModes\Fallout3*.dll" "%outputPath%\NCC\GameModes"
-copy "%_NMMPATH%\Stage\Release\GameModes\Fallout4*.dll" "%outputPath%\NCC\GameModes"
-copy "%_NMMPATH%\Stage\Release\GameModes\FalloutNV*.dll" "%outputPath%\NCC\GameModes"
-copy "%_NMMPATH%\Stage\Release\GameModes\Skyrim*.dll" "%outputPath%\NCC\GameModes"
-copy "%_NMMPATH%\Stage\Release\GameModes\SkyrimSE*.dll" "%outputPath%\NCC\GameModes"
+copy "%_NMMPATH%\Stage\Release\GameModes\GamebryoBase*.dll" "%outputPath%\NCC\GameModes"
+copy "%_NMMPATH%\Stage\Release\GameModes\Enderal*.dll" "%outputPath%\NCC\GameModes"
+copy "%_NMMPATH%\Stage\Release\GameModes\Fallout*.dll" "%outputPath%\NCC\GameModes"
+copy "%_NMMPATH%\Stage\Release\GameModes\Morrowind*.dll" "%outputPath%\NCC\GameModes"
 copy "%_NMMPATH%\Stage\Release\GameModes\Oblivion*.dll" "%outputPath%\NCC\GameModes"
-copy "%_NMMPATH%\Stage\Release\GameModes\GamebryoBase.dll" "%outputPath%\NCC\GameModes"
+copy "%_NMMPATH%\Stage\Release\GameModes\Skyrim*.dll" "%outputPath%\NCC\GameModes"
 
 rem we should reimplement the dummy classes eventually
 mkdir  "%outputPath%\NCC\GameModes\data"

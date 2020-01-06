@@ -6,7 +6,8 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="InstalledGames" Type="Nexus.Client.Settings.SettingsList" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
     </Setting>
     <Setting Name="InstalledGamesDetected" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -27,7 +28,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="AddMissingInfoToMods" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CloseModManagerAfterGameLaunch" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -42,43 +43,33 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="RepositoryAuthenticationTokens" Type="Nexus.Client.Settings.KeyedSettings`1[Nexus.Client.Settings.KeyedSettings`1[System.String]]" Scope="User">
-      <Value Profile="(Default)">
-				&lt;?xml version="1.0" encoding="utf-16"?&gt;
-				&lt;KeyedSettingsOfKeyedSettingsOfString /&gt;
-			</Value>
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;KeyedSettingsOfKeyedSettingsOfString /&gt;</Value>
     </Setting>
     <Setting Name="QueuedModsToAdd" Type="Nexus.Client.Settings.PerGameModeSettings`1[Nexus.Client.Settings.KeyedSettings`1[Nexus.Client.ModManagement.AddModDescriptor]]" Scope="User">
-      <Value Profile="(Default)">
-				&lt;?xml version="1.0" encoding="utf-16"?&gt;
-				&lt;PerGameModeSettingsOfKeyedSettingsOfAddModDescriptor /&gt;
-			</Value>
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;PerGameModeSettingsOfKeyedSettingsOfAddModDescriptor /&gt;</Value>
     </Setting>
     <Setting Name="ModManagerUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://skyrim.nexusmods.com/downloads/file.php?id=1334</Value>
+      <Value Profile="(Default)">https://www.nexusmods.com/content/modmanager/</Value>
     </Setting>
     <Setting Name="CheckForUpdatesOnStartup" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="NumberOfConnections" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="UserLocation" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="PremiumOnly" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">default</Value>
     </Setting>
     <Setting Name="UpdateCheckInterval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="LastUpdateCheckDate" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ModVersionsCheckInterval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="LastModVersionsCheckDate" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="TempPathFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -90,46 +81,43 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ShowEmptyCategory" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="HideModUpdateWarningIcon" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SkipReadmeFiles" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ShowSidePanel" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CategoryViewDefaultSortOrder" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="CategoryViewDefaultSortColumn" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="UseCategoryView" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="OfflineMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SupportOfflineMode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="UseMultithreadedDownloads" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ShowStartupMessage" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CheckForTipsOnStartup" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="AutoPluginSorting" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ManageMultiplePluginTask" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="MaxConcurrentDownloads" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="SupportedTools" Type="Nexus.Client.Settings.PerGameModeSettings`1[Nexus.Client.Settings.KeyedSettings`1[System.String]]" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -165,9 +153,22 @@
     </Setting>
     <Setting Name="HelpLinks" Type="Nexus.Client.Settings.KeyedSettings`1[System.String]" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;KeyedSettingsOfString /&gt;</Value>
+&lt;KeyedSettingsOfString&gt;
+  &lt;item key="Beta Wiki"&gt;
+    &lt;string&gt;https://wiki.nexusmods.com/index.php/Category:NMM&lt;/string&gt;
+  &lt;/item&gt;
+  &lt;item key="Beta Forums"&gt;
+    &lt;string&gt;https://forums.nexusmods.com/index.php?/forum/439-open-beta-feedback/&lt;/string&gt;
+  &lt;/item&gt;
+  &lt;item key="Bug Report How To"&gt;
+    &lt;string&gt;https://forums.nexusmods.com/index.php?/topic/460590-reporting-bugs/&lt;/string&gt;
+  &lt;/item&gt;
+  &lt;item key="Report a Bug"&gt;
+    &lt;string&gt;https://github.com/Nexus-Mods/Nexus-Mod-Manager/issues&lt;/string&gt;
+  &lt;/item&gt;
+&lt;/KeyedSettingsOfString&gt;</Value>
     </Setting>
-    <Setting Name="ToolFolder" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="Application">
+    <Setting Name="ToolFolder" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;PerGameModeSettingsOfString /&gt;</Value>
     </Setting>
@@ -227,58 +228,17 @@
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;PerGameModeSettingsOfKeyedSettingsOfString /&gt;</Value>
     </Setting>
-    <Setting Name="InstalledGames" Type="Nexus.Client.Settings.SettingsList" Scope="User">
-      <Value Profile="(Default)">
-     &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;
-    </Value>
-    </Setting>
-    <Setting Name="QueuedModsToAdd" Type="Nexus.Client.Settings.PerGameModeSettings`1[Nexus.Client.Settings.KeyedSettings`1[Nexus.Client.ModManagement.AddModDescriptor]]" Scope="User">
-      <Value Profile="(Default)">
-     &lt;PerGameModeSettingsOfKeyedSettingsOfAddModDescriptor /&gt;
-    </Value>
-    </Setting>
-    <Setting Name="WindowPositions" Type="Nexus.Client.Settings.WindowPositions" Scope="User">
-      <Value Profile="(Default)">
-     &lt;WindowPositions /&gt;
-    </Value>
-    </Setting>
-    <Setting Name="ColumnWidths" Type="Nexus.Client.Settings.ColumnWidths" Scope="User">
-      <Value Profile="(Default)">
-     &lt;ColumnWidths /&gt;
-    </Value>
-    </Setting>
-    <Setting Name="SplitterSizes" Type="Nexus.Client.Settings.SplitterSizes" Scope="User">
-      <Value Profile="(Default)">
-     &lt;SplitterSizes /&gt;
-    </Value>
-    </Setting>
-    <Setting Name="ToolFolder" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
-      <Value Profile="(Default)">
-     &lt;PerGameModeSettingsOfString /&gt;
-    </Value>
-    </Setting>
-    <Setting Name="SupportedTools" Type="Nexus.Client.Settings.PerGameModeSettings`1[Nexus.Client.Settings.KeyedSettings`1[System.String]]" Scope="User">
-      <Value Profile="(Default)">
-     &lt;PerGameModeSettingsOfKeyedSettingsOfString /&gt;
-    </Value>
-    </Setting>
-    <Setting Name="VirtualFolder" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
-      <Value Profile="(Default)">
-     &lt;PerGameModeSettingsOfString /&gt;
-    </Value>
-    </Setting>
-    <Setting Name="HDLinkFolder" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.String]" Scope="User">
-      <Value Profile="(Default)">
-     &lt;PerGameModeSettingsOfString /&gt;
-    </Value>
-    </Setting>
-    <Setting Name="MultiHDInstall" Type="Nexus.Client.Settings.PerGameModeSettings`1[System.Boolean]" Scope="User">
-      <Value Profile="(Default)">
-     &lt;PerGameModeSettingsOfBoolean /&gt;
-    </Value>
-    </Setting>
     <Setting Name="OverrideLocalModNames" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastCheckedMissingDownloadID" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SkyrimSEFirstInstallWarning" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>
