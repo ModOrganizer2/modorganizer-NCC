@@ -21,8 +21,8 @@ using Nexus.Client.ModManagement.InstallationLog;
 
 namespace Nexus.Client.ModManagement.InstallationLog
 {
-    class DummyInstallLog : IInstallLog
-    {
+    public partial class DummyInstallLog : IInstallLog
+  {
 
         private Dictionary<string, Pair<IMod, string>> m_InstalledFiles = null;
         private Set<string> m_UsedKeys = null;
@@ -268,12 +268,12 @@ namespace Nexus.Client.ModManagement.InstallationLog
             // nop
         }
 
-        public byte[] GetXMLModList()
+        public byte[] GetXmlModList()
         {
             return null;
         }
 
-        public byte[] GetXMLIniList()
+        public byte[] GetXmlIniList()
         {
             return null;
         }
